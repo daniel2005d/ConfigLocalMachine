@@ -1,0 +1,7 @@
+---
+- name: "Custom Installation"
+  hosts: localhost
+  connection: local
+  roles:
+    - role: "rules/config-files"
+
