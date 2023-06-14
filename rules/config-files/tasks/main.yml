@@ -6,7 +6,7 @@
     state: present
   become: true
   become_method: sudo
-  
+
 - name: "Copying Settings Files"
   copy:
     src: "{{ playbook_dir }}/files/.tmux.conf"
@@ -54,6 +54,12 @@
   become: true
   become_method: sudo
 
+- name: "Copying Terminal icons"
+  copy:
+    src: "{{ playbook_dir }}/files/utilities-terminal.svg"
+    dest: "/usr/share/icons/hackthebox/24x24/apps/"
+  become: true
+  become_method: sudo
 
 - name: "Copying Mate Settings Desktop"
   copy:
