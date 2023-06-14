@@ -44,7 +44,7 @@
 
 - name: "Install VBox Addions, rofi, git, apt-transport-https"
   apt:
-    name: build-essential,dkms,linux-headers-{{ansible_kernel}},rofi, git,apt-transport-https, golang, vim, grc, tmux
+    name: build-essential,dkms,linux-headers-{{ansible_kernel}},rofi, git,apt-transport-https, golang, vim, grc, tmux, python3-pip
     state: present
   become: true
   become_method: sudo
@@ -101,3 +101,7 @@
   become: true
   become_method: sudo
   when: not subl_command.stat.exists
+
+- name: "Installing pip tools"
+  pip:
+    name: updog

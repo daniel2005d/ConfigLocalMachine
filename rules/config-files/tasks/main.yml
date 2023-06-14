@@ -16,9 +16,9 @@
     src: "{{ playbook_dir }}/scripts/"
     dest: "{{ ansible_env.HOME }}/bin/"
     mode: 0775
-- name: "Creating Shortcuts Keybinding"
+- name: "Setting Mate Desktop"
   shell:
-    cmd: "dconf load /org/mate/desktop/keybindings/ < {{ playbook_dir }}/files/custom-keybindings"
+    cmd: "dconf load /org/mate/ < {{ playbook_dir }}/files/mate.settings"
 
 - name: "Checking if sudo was setting"
   lineinfile: 
