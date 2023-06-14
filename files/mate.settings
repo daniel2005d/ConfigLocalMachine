@@ -21,6 +21,7 @@ side-pane-background-color='#008080'
 side-pane-background-set=true
 
 [caja/window-state]
+geometry='800x550+0+53'
 maximized=false
 start-with-location-bar=true
 start-with-sidebar=true
@@ -51,7 +52,7 @@ togglekeys-enable=false
 
 [desktop/background]
 color-shading-type='solid'
-picture-filename='/usr/share/backgrounds/default.jpg'
+picture-filename='/usr/share/backgrounds/parrot-splash.jpg'
 picture-options='zoom'
 primary-color='rgb(44,0,30)'
 secondary-color='rgb(44,0,30)'
@@ -83,7 +84,7 @@ autorun-never=true
 autorun-x-content-start-app=['x-content/software']
 
 [desktop/peripherals/keyboard]
-numlock-state='on'
+numlock-state='off'
 
 [desktop/peripherals/keyboard/general]
 duplicate-leds=false
@@ -113,7 +114,7 @@ vertical-edge-scrolling=true
 vertical-two-finger-scrolling=true
 
 [desktop/session]
-session-start=1686770740
+session-start=1686777355
 
 [desktop/sound]
 enable-esd=true
@@ -168,7 +169,7 @@ theme='slider'
 
 [panel/general]
 history-mate-run=['mate-terminal', 'firefox']
-object-id-list=['menu-bar', 'notification-area', 'clock', 'object-0']
+object-id-list=['menu-bar', 'notification-area', 'clock', 'object-0', 'object-2', 'object-1', 'object-3']
 toplevel-id-list=['top']
 
 [panel/objects/clock]
@@ -201,7 +202,31 @@ toplevel-id='top'
 applet-iid='WnckletFactory::WindowListApplet'
 object-type='applet'
 panel-right-stick=false
-position=262
+position=350
+toplevel-id='top'
+
+[panel/objects/object-0/prefs]
+display-all-workspaces=true
+show-window-thumbnails=false
+
+[panel/objects/object-1]
+object-type='separator'
+panel-right-stick=false
+position=348
+toplevel-id='top'
+
+[panel/objects/object-2]
+launcher-location='firefox.desktop'
+object-type='launcher'
+panel-right-stick=false
+position=255
+toplevel-id='top'
+
+[panel/objects/object-3]
+launcher-location='mate-terminal.desktop'
+object-type='launcher'
+panel-right-stick=false
+position=307
 toplevel-id='top'
 
 [panel/toplevels/top]
@@ -209,6 +234,11 @@ expand=true
 orientation='top'
 screen=0
 size=24
+
+[panel/toplevels/top/background]
+color='#262A33'
+opacity=48853
+type='color'
 
 [pluma]
 active-plugins=['changecase', 'sort', 'time', 'docinfo', 'taglist', 'filebrowser', 'spell', 'modelines']
@@ -292,7 +322,7 @@ sort-order=1
 allow-bold=false
 background-color='#000000000000'
 background-darkness=0.90784313725490196
-background-type='transparent'
+background-type='solid'
 bold-color='#000000000000'
 cursor-shape='ibeam'
 font='Hack Nerd Font Propo 12'

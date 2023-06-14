@@ -28,3 +28,26 @@
   become: true
   become_method: sudo
 
+- name: "Copying icons"
+  copy:
+    src: "{{ playbook_dir }}/files/utilities-terminal.svg"
+    dest: "{{ ansible_env.HOME }}/Pictures/"
+
+- name: "Copying Mate Settings Desktop"
+  copy:
+    dest: "/usr/share/applications/mate-terminal.desktop"
+    content: |
+      #!/usr/bin/env xdg-open
+      [Desktop Entry]
+      Version=1.0
+      Type=Application
+      Terminal=false
+      Icon=/home/cyb3rb0b/Downloads/utilities-terminal.svg
+      Icon[en_US]={{ ansible_env.HOME }}/Pictures/utilities-terminal.svg
+      Name[en_US]=mate-terminal
+      Exec=/usr/bin/mate-terminal
+      Name=mate-terminal
+  become: true
+  become_method: sudo
+
+
