@@ -1,4 +1,11 @@
 ---
+- name: "Change opt permissions"
+  shell:
+    cmd: chown -R {{ ansible_env.USER}}:{{ ansible_env.USER}} /opt
+  become: true
+  become_method: sudo
+
+
 - name: "Installing Feroxbuster"
   git:
      clone: true
