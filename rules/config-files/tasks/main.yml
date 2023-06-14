@@ -16,25 +16,16 @@
     src: "{{ playbook_dir }}/scripts/"
     dest: "{{ ansible_env.HOME }}/bin/"
     mode: 0775
-- name: "Installing Feroxbuster"
-  git:
-     clone: true
-     dest: "/opt/feroxbuster/"
-     repo: "https://github.com/epi052/feroxbuster.git"
-- name: "Downloading Fonts"
-  get_url: 
-    url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/Hack.zip
-    dest: "/tmp/Hack.zip"
+- name: "Creating Shortcuts Keybinding"
+  shell:
+    cmd: "dconf load /org/mate/desktop/keybindings/ < {{ playbook_dir }}/files/custom-keybindings"
 
-- name: "Creating fonts folder"
-  file:
-    path: "{{ansible_env.HOME}}/.local/share/fonts"
-    state: "directory"
-    mode: 0777
-
-- name: "Uncompress Fonts Zip File"
-  shell: |
-    cd {{ansible_env.HOME}}/.local/share/fonts/ && unzip -o /tmp/Hack.zip
+- name: "Setting SUDO for {{ansible_env.USER}}"
+  shell:
+    cmd: echo "{{ansible_env.USER}} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+  become: true
+  become_method: sudo
+    
 #- name: "Installing Software"
 #  apt:
 #    name: "git, tmux, python-dev"

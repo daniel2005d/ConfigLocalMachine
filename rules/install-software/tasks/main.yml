@@ -1,0 +1,90 @@
+---
+- name: "Installing Feroxbuster"
+  git:
+     clone: true
+     dest: "/opt/feroxbuster/"
+     repo: "https://github.com/epi052/feroxbuster.git"
+- name: "Downloading Fonts"
+  get_url: 
+    url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/Hack.zip
+    dest: "/tmp/Hack.zip"
+- name: "Checking folder fonts"
+  stat:
+    path: "{{ansible_env.HOME}}/.local/share/fonts"
+  register: fonts_folder
+- name: "Creating fonts folder"
+  file:
+    path: "{{ansible_env.HOME}}/.local/share/fonts"
+    state: "directory"
+    mode: 0777
+  when: not fonts_folder.stat.exists
+
+
+- name: "Uncompress Fonts Zip File"
+  shell: |
+    cd {{ansible_env.HOME}}/.local/share/fonts/ && unzip -o /tmp/Hack.zip
+  when: not fonts_folder.stat.exists
+
+- name: "Install VBox Addions, rofi, git, apt-transport-https"
+  apt:
+    name: build-essential,dkms,linux-headers-{{ansible_kernel}},rofi, git,apt-transport-https, golang
+    state: present
+  become: true
+  become_method: sudo
+- name: "Checinkg VsCode"
+  stat:
+    path: "/usr/bin/codium"
+  register: code_command
+
+- name: "Checinkg VsCode code aliases"
+  stat:
+    path: "/usr/bin/codium"
+  register: codium_command
+
+- name: "Checinkg VsCode code aliases 2"
+  stat:
+    path: "/usr/bin/code"
+  register: code_command
+
+- name: "Installing Visual Studio Code"
+  apt:
+    deb: "https://az764295.vo.msecnd.net/stable/4cb974a7aed77a74c7813bdccd99ee0d04901215/code_1.79.1-1686587647_amd64.deb"
+  become: true
+  become_method: sudo
+  when: not code_command.stat.exists
+
+- name: "Creating VsCode link"
+  shell:
+    cmd: ln -s /usr/bin/codium /usr/bin/code
+  become: true
+  become_method: sudo
+  when: codium_command.stat.exists and not code_command.stat.exists
+
+#- name: "Debug"
+#  debug:
+#    var: ansible_env.USER
+
+
+- name: "Checinkg sublimetext"
+  stat:
+    path: "/usr/bin/subl"
+  register: subl_command
+
+- name: "Configuring Subl Repos"
+  shell: |
+    wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/sublimehq-archive.gpg > /dev/null
+    echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
+  when: not subl_command.stat.exists
+
+- name: "Installing Subl"
+  apt:
+    name: sublime-text
+  when: not subl_command.stat.exists
+
+
+
+
+
+
+
+# tasks file for install-software

@@ -1,0 +1,29 @@
+[custom0]
+action='firefox'
+binding='<Mod4>b'
+name='browser'
+
+[custom1]
+action='firefox'
+binding='<Mod4>f'
+name='firefox'
+
+[custom2]
+action='mate-terminal'
+binding='<Mod4>Return'
+name='Terminal'
+
+[custom3]
+action='geany'
+binding='<Mod4>g'
+name='geany'
+
+[custom4]
+action='/usr/bin/rofi -show run windowcd'
+binding='<Alt>F2'
+name='rofi'
+
+[custom5]
+action='mate-terminal -x vim'
+binding='<Mod4>v'
+name='vim'
