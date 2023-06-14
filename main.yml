@@ -4,6 +4,6 @@
   connection: local
   roles:
     - role: "rules/config-files"
-    - role: "rules/install-software"
+    #- role: "rules/install-software"
   
 

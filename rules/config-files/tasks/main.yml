@@ -33,10 +33,10 @@
     src: "{{ playbook_dir }}/files/utilities-terminal.svg"
     dest: "{{ ansible_env.HOME }}/Pictures/"
 
-- name: "Copying icons"
+- name: "Copying Terminal icons"
   copy:
-    dest: "{{ playbook_dir }}/files/utilities-terminal.svg"
-    src: "/usr/share/icons/hackthebox/22/apps/"
+    src: "{{ playbook_dir }}/files/utilities-terminal.svg"
+    dest: "/usr/share/icons/hackthebox/22/apps/"
   copy:
     src: "{{ playbook_dir }}/files/utilities-terminal.svg"
     dest: "/usr/share/icons/hackthebox/32/apps/"
@@ -56,7 +56,7 @@
       Version=1.0
       Type=Application
       Terminal=false
-      Icon=/home/cyb3rb0b/Downloads/utilities-terminal.svg
+      Icon={{ ansible_env.HOME}}/Pictures/utilities-terminal.svg
       Icon[en_US]={{ ansible_env.HOME }}/Pictures/utilities-terminal.svg
       Name[en_US]=mate-terminal
       Exec=/usr/bin/mate-terminal
