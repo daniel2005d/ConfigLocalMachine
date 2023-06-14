@@ -20,15 +20,11 @@
   shell:
     cmd: "dconf load /org/mate/desktop/keybindings/ < {{ playbook_dir }}/files/custom-keybindings"
 
-- name: "Setting SUDO for {{ansible_env.USER}}"
-  shell:
-    cmd: echo "{{ansible_env.USER}} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+- name: "Checking if sudo was setting"
+  lineinfile: 
+    path: /etc/sudoers
+    line: "{{ ansible_env.USER }} ALL=(ALL) NOPASSWD:ALL"
+    state: present
   become: true
   become_method: sudo
-    
-#- name: "Installing Software"
-#  apt:
-#    name: "git, tmux, python-dev"
-#    when: "find('git') != -1"
-#  become: true
-#  become_method: sudo
+
