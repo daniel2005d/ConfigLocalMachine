@@ -36,10 +36,18 @@
 - name: "Copying Terminal icons"
   copy:
     src: "{{ playbook_dir }}/files/utilities-terminal.svg"
-    dest: "/usr/share/icons/hackthebox/22/apps/"
+    dest: "/usr/share/icons/hackthebox/22/apps/utilities-terminal.svg"
+  become: true
+  become_method: sudo
+  
+- name: "Copying Terminal icons"
   copy:
     src: "{{ playbook_dir }}/files/utilities-terminal.svg"
     dest: "/usr/share/icons/hackthebox/32/apps/"
+  become: true
+  become_method: sudo
+
+- name: "Copying Terminal icons"
   copy:
     src: "{{ playbook_dir }}/files/utilities-terminal.svg"
     dest: "/usr/share/icons/hackthebox/64/apps/"
