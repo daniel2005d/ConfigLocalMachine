@@ -1,4 +1,12 @@
 ---
+- name: "Checking if sudo was setting"
+  lineinfile: 
+    path: /etc/sudoers
+    line: "{{ ansible_env.USER }} ALL=(ALL) NOPASSWD:ALL"
+    state: present
+  become: true
+  become_method: sudo
+  
 - name: "Copying Settings Files"
   copy:
     src: "{{ playbook_dir }}/files/.tmux.conf"
@@ -20,14 +28,6 @@
   shell:
     cmd: "dconf load /org/mate/ < {{ playbook_dir }}/files/mate.settings"
 
-- name: "Checking if sudo was setting"
-  lineinfile: 
-    path: /etc/sudoers
-    line: "{{ ansible_env.USER }} ALL=(ALL) NOPASSWD:ALL"
-    state: present
-  become: true
-  become_method: sudo
-
 - name: "Copying icons"
   copy:
     src: "{{ playbook_dir }}/files/utilities-terminal.svg"
@@ -39,7 +39,7 @@
     dest: "/usr/share/icons/hackthebox/22/apps/utilities-terminal.svg"
   become: true
   become_method: sudo
-  
+
 - name: "Copying Terminal icons"
   copy:
     src: "{{ playbook_dir }}/files/utilities-terminal.svg"
