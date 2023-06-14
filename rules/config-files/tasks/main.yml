@@ -33,6 +33,20 @@
     src: "{{ playbook_dir }}/files/utilities-terminal.svg"
     dest: "{{ ansible_env.HOME }}/Pictures/"
 
+- name: "Copying icons"
+  copy:
+    dest: "{{ playbook_dir }}/files/utilities-terminal.svg"
+    src: "/usr/share/icons/hackthebox/22/apps/"
+  copy:
+    src: "{{ playbook_dir }}/files/utilities-terminal.svg"
+    dest: "/usr/share/icons/hackthebox/32/apps/"
+  copy:
+    src: "{{ playbook_dir }}/files/utilities-terminal.svg"
+    dest: "/usr/share/icons/hackthebox/64/apps/"
+  become: true
+  become_method: sudo
+
+
 - name: "Copying Mate Settings Desktop"
   copy:
     dest: "/usr/share/applications/mate-terminal.desktop"
@@ -49,5 +63,3 @@
       Name=mate-terminal
   become: true
   become_method: sudo
-
-
