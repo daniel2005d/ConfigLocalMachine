@@ -5,20 +5,30 @@
   become: true
   become_method: sudo
 
+- name: "Checking Feroxbuster"
+  stat:
+    path: "/opt/feroxbuster/"
+  register: ferobuster_folder
+
 
 - name: "Installing Feroxbuster"
   git:
      clone: true
      dest: "/opt/feroxbuster/"
      repo: "https://github.com/epi052/feroxbuster.git"
-- name: "Downloading Fonts"
-  get_url: 
-    url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/Hack.zip
-    dest: "/tmp/Hack.zip"
+  when: not ferobuster_folder.stat.exists
+
 - name: "Checking folder fonts"
   stat:
     path: "{{ansible_env.HOME}}/.local/share/fonts"
   register: fonts_folder
+
+- name: "Downloading Fonts"
+  get_url: 
+    url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/Hack.zip
+    dest: "/tmp/Hack.zip"
+  when: not fonts_folder.stat.exists
+
 - name: "Creating fonts folder"
   file:
     path: "{{ansible_env.HOME}}/.local/share/fonts"
@@ -83,15 +93,11 @@
     echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
   when: not subl_command.stat.exists
 
+
 - name: "Installing Subl"
   apt:
+    update_cache: true
     name: sublime-text
+  become: true
+  become_method: sudo
   when: not subl_command.stat.exists
-
-
-
-
-
-
-
-# tasks file for install-software
