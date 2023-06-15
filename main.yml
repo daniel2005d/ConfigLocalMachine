@@ -5,5 +5,6 @@
   roles:
     - role: "rules/config-files"
     - role: "rules/install-software"
+    - role: "rules/pentest-tools"
   
 

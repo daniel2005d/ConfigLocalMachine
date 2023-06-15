@@ -19,14 +19,31 @@
   copy:
     src: "{{ playbook_dir }}/files/.bashrc"
     dest: "{{ ansible_env.HOME }}/"
+
+- name: "Creating vimrc"
+  copy:
+    dest: "{{ ansible_env.HOME}}/.vimrc"
+    content: |
+      set number
+      syntax on
+
 - name: "Copying scripts files"
   copy:
     src: "{{ playbook_dir }}/scripts/"
     dest: "{{ ansible_env.HOME }}/bin/"
     mode: 0775
+
+- name: "Checking if dconf exists"
+  stat:
+    path: "/usr/bin/dconf"
+  register: dconf_command
+  become: true
+  become_method: sudo
+
 - name: "Setting Mate Desktop"
   shell:
     cmd: "dconf load /org/mate/ < {{ playbook_dir }}/files/mate.settings"
+  when: dconf_command.stat.exists
 
 - name: "Copying icons"
   copy:
