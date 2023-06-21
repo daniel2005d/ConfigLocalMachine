@@ -26,7 +26,7 @@
 
 - name: "Install rofi, git, apt-transport-https"
   apt:
-    name: build-essential,dkms,linux-headers-{{ansible_kernel}},rofi, git,apt-transport-https, golang, vim, grc, tmux, python3-pip, libssl-dev, libffi-dev, python-dev-is-python3, python3-venv, ssh
+    name: build-essential,dkms,linux-headers-{{ansible_kernel}},rofi, git,apt-transport-https, golang, vim, grc, tmux, python3-pip, libssl-dev, libffi-dev, python-dev-is-python3, python3-venv, ssh, nmap
     state: present
   become: true
   become_method: sudo

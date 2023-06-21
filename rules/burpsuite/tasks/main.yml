@@ -1,0 +1,25 @@
+- name: "Check if burpsuite exists"
+  stat: 
+    path: "/usr/share/burpsuite/burpsuite.jar"
+  register: burpsuite_jar
+
+- name: "Check if BurpSuiteCA.der exists"
+  stat:
+    path: /usr/local/share/ca-certificates/BurpSuiteCA.der
+  register: burp_cert
+
+- name: "Executing bash script to Download CA Certificate"
+  command:
+    cmd: /bin/bash -c "timeout 45 /usr/lib/jvm/java-17-openjdk-amd64/bin/java -Djava.awt.headless=true -jar /usr/share/burpsuite/burpsuite.jar < <(echo y) & sleep 30 & curl -s http://localhost:8080/cert -o /tmp/cacert.der"
+  when: burp_cert.stat.exists == False and burpsuite_jar.stat.exists
+
+- name: "Copying CA Certificate to /usr/local/share/ca-certificates"
+  copy:
+    src: /tmp/cacert.der
+    dest: /usr/local/share/ca-certificates/BurpSuiteCA.der
+    owner: root
+    group: root
+    mode: 0644
+  become: true
+  become_method: sudo
+  when: burp_cert.stat.exists == False and burpsuite_jar.stat.exists
