@@ -50,17 +50,18 @@
     src: "{{ playbook_dir }}/files/utilities-terminal.svg"
     dest: "{{ ansible_env.HOME }}/Pictures/"
 
+- name: "Checking hackthebox Folder"
+  stat:
+    path: "/usr/share/icons/hackthebox"
+  register: htbicons_folder
+
 - name: "Copying Terminal icons"
   copy:
     src: "{{ playbook_dir }}/files/utilities-terminal.svg"
     dest: "/usr/share/icons/hackthebox/22/apps/utilities-terminal.svg"
   become: true
   become_method: sudo
-
-- name: "Checking hackthebox Folder"
-  stat:
-    path: "/usr/share/icons/hackthebox"
-  register: htbicons_folder
+  when: htbicons_folder.stat.exists
 
 - name: "Copying Terminal icons"
   copy:
