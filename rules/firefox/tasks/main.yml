@@ -1,0 +1,7 @@
+---
+- name: "Updating firefox policies"
+  template: 
+    src: "templates/firefox-policies.json.j2"
+    dest: "/usr/share/firefox/distribution/policies.json"
+  become: true
+  become_method: sudo
