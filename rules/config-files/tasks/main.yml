@@ -57,12 +57,18 @@
   become: true
   become_method: sudo
 
+- name: "Checking hackthebox Folder"
+  stat:
+    path: "/usr/share/icons/hackthebox"
+  register: htbicons_folder
+
 - name: "Copying Terminal icons"
   copy:
     src: "{{ playbook_dir }}/files/utilities-terminal.svg"
     dest: "/usr/share/icons/hackthebox/32/apps/"
   become: true
   become_method: sudo
+  when: htbicons_folder.stat.exists
 
 - name: "Copying Terminal icons"
   copy:
@@ -70,6 +76,7 @@
     dest: "/usr/share/icons/hackthebox/64/apps/"
   become: true
   become_method: sudo
+  when: htbicons_folder.stat.exists
 
 - name: "Copying Terminal icons"
   copy:
@@ -77,6 +84,7 @@
     dest: "/usr/share/icons/hackthebox/24x24/apps/"
   become: true
   become_method: sudo
+  when: htbicons_folder.stat.exists
 
 - name: "Copying Mate Settings Desktop"
   copy:

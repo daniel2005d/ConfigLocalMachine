@@ -35,12 +35,6 @@
     path: "/usr/bin/codium"
   register: code_command
 
-#- name: "Installing lsd"
-#  shell:
-#    cmd: cargo install lsd
-#  become: true
-#  become_method: sudo
-
 - name: "Installing pip tools"
   pip:
     name: updog, pipx, impacket
