@@ -3,9 +3,9 @@
   hosts: localhost
   connection: local
   roles:
-    #- role: "rules/config-files"
-    #- role: "rules/install-software"
-    #- role: "rules/pentest-tools"
+    - role: "rules/config-files"
+    - role: "rules/install-software"
+    - role: "rules/pentest-tools"
     - role: "rules/firefox"
   
 
