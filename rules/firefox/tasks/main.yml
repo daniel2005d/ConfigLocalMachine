@@ -5,3 +5,10 @@
     dest: "/usr/share/firefox/distribution/policies.json"
   become: true
   become_method: sudo
+
+- name: "Updating ESR firefox"
+  template: 
+    src: "templates/firefox-policies.json.j2"
+    dest: "/usr/share/firefox-esr/distribution/policies.json"
+  become: true
+  become_method: sudo
