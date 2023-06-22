@@ -2,11 +2,21 @@
 - name: "Custom Installation"
   hosts: localhost
   connection: local
+  tasks:
+    - name: "Alert for Environment"
+      debug:
+        msg: "The ENV Environment variable is not defined"
+      when: 'ansible_env.ENV is not defined'
+
+    - name: "Install Pentest Tools"
+      include_role:
+        name: "{{ item }}"
+      loop:
+        - rules/pentest-tools
+        - rules/install-software
+        - rules/firefox
+        - rules/burpsuite
+      when: '"Pentest" == ansible_env.ENV|default("")'
   roles:
-    #- role: "rules/config-files"
-    #- role: "rules/install-software"
-    #- role: "rules/pentest-tools"
-    #- role: "rules/firefox"
-    - role: "rules/burpsuite"
-  
+    - role: "rules/config-files"  
 
