@@ -13,9 +13,9 @@
         name: "{{ item }}"
       loop:
         - rules/pentest-tools
-        - rules/install-software
-        - rules/firefox
-        - rules/burpsuite
+        #- rules/install-software
+        #- rules/firefox
+        #- rules/burpsuite
       when: '"Pentest" == ansible_env.ENV|default("")'
   roles:
     - role: "rules/config-files"  
