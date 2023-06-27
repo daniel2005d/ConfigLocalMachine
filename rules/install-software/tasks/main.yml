@@ -30,6 +30,7 @@
     state: present
   become: true
   become_method: sudo
+
 - name: "Checinkg VsCode"
   stat:
     path: "/usr/bin/codium"
@@ -39,28 +40,10 @@
   pip:
     name: updog, pipx, impacket
 
-- name: "Checking folder fonts"
-  stat:
-    path: "{{ansible_env.HOME}}/.local/share/fonts"
-  register: fonts_folder
-
 - name: "Checking 24x24 theme folder"
   stat:
     path: "/usr/share/icons/hackthebox/24x24/apps"
   register: icons_24_folder
-
-- name: "Downloading Fonts"
-  get_url: 
-    url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/Hack.zip
-    dest: "/tmp/Hack.zip"
-  when: not fonts_folder.stat.exists
-
-- name: "Creating fonts folder"
-  file:
-    path: "{{ansible_env.HOME}}/.local/share/fonts"
-    state: "directory"
-    mode: 0777
-  when: not fonts_folder.stat.exists
 
 - name: "Creating 24 icons folder"
   file:
@@ -70,13 +53,6 @@
   become: true
   become_method: sudo
   when: not icons_24_folder.stat.exists
-
-
-
-- name: "Uncompress Fonts Zip File"
-  shell: |
-    cd {{ansible_env.HOME}}/.local/share/fonts/ && unzip -o /tmp/Hack.zip
-  when: not fonts_folder.stat.exists
 
 - name: "Checinkg VsCode code aliases"
   stat:
