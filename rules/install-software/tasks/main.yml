@@ -70,10 +70,3 @@
   become: true
   become_method: sudo
   when: codium_command.stat.exists and not code_command.stat.exists
-
-- name: "Installing Feroxbuster"
-  git:
-     clone: true
-     dest: "/opt/feroxbuster/"
-     repo: "https://github.com/epi052/feroxbuster.git"
-  when: not ferobuster_folder.stat.exis
