@@ -53,7 +53,7 @@
 
 - name: "Setting Mate Desktop"
   shell:
-    cmd: "dconf load /org/mate/ < /tmp/mate.settings"
+    cmd: "dconf load / < /tmp/mate.settings"
   when: dconf_command.stat.exists
 
 
