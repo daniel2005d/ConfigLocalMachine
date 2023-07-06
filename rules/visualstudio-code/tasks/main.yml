@@ -1,0 +1,54 @@
+---
+- name: "Checinkg VsCode code aliases"
+  stat:
+   path: "/usr/bin/code"
+  register: code_command
+
+- name: "Install necesary packages for Code"
+  apt:
+    name: pgp
+    state: present
+  become: true
+  become_method: sudo
+
+- name: "Register KeyRing"
+  shell:
+    cmd: wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+
+- name: "Install KeyRing"
+  shell:
+    cmd: install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
+  become: true
+  become_method: sudo
+
+- name: "Add deb to repositories"
+  shell:
+    cmd:  sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
+  become: true
+  become_method: sudo
+
+- name: "Installing Visual Studio Code"
+  apt:
+   update_cache: true
+   name: "code"
+   state: present
+  become: true
+  become_method: sudo
+  when: not code_command.stat.exists
+
+- name: "Creating VsCode link"
+  shell:
+    cmd: ln -s /usr/bin/codium /usr/bin/code
+  become: true
+  become_method: sudo
+  when: not code_command.stat.exists
+
+# Extensions
+- name: "Installing Extensions"
+  shell:
+    cmd: code --install-extension {{item}} --force
+  loop:
+    - "streetsidesoftware.code-spell-checker"
+    - "ms-python.python"
+    - "silofy.hackthebox"
+    - "GitHub.copilot-nightly"

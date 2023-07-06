@@ -24,10 +24,10 @@
   become: true
   become_method: sudo
 
-- name: "Checinkg VsCode"
-  stat:
-    path: "/usr/bin/codium"
-  register: code_command
+#- name: "Checinkg VsCode"
+#  stat:
+#    path: "/usr/bin/codium"
+#  register: code_command
 
 - name: "Installing pip tools"
   pip:
@@ -46,27 +46,3 @@
   become: true
   become_method: sudo
   when: not icons_24_folder.stat.exists
-
-- name: "Checinkg VsCode code aliases"
-  stat:
-    path: "/usr/bin/codium"
-  register: codium_command
-
-- name: "Checinkg VsCode code aliases 2"
-  stat:
-    path: "/usr/bin/code"
-  register: code_command
-
-- name: "Installing Visual Studio Code"
-  apt:
-    deb: "https://az764295.vo.msecnd.net/stable/4cb974a7aed77a74c7813bdccd99ee0d04901215/code_1.79.1-1686587647_amd64.deb"
-  become: true
-  become_method: sudo
-  when: not code_command.stat.exists
-
-- name: "Creating VsCode link"
-  shell:
-    cmd: ln -s /usr/bin/codium /usr/bin/code
-  become: true
-  become_method: sudo
-  when: codium_command.stat.exists and not code_command.stat.exists
