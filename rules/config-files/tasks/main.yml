@@ -9,29 +9,35 @@
 
 - name: "Copying Settings Files"
   copy:
-    src: "{{ playbook_dir }}/files/.tmux.conf"
-    dest: "{{ ansible_env.HOME }}/"
-- name: "Copying bash_aliases"
+    src: "{{item.src}}" 
+    dest: "{{item.dest}}"
+    mode: "preserve"
+  loop:
+    - {"src":"{{ playbook_dir }}/files/", "dest":"{{ ansible_env.HOME }}/"}
+    - {"src":"{{ playbook_dir }}/scripts/", "dest":"{{ ansible_env.HOME }}/bin"}
+    - {"src":"{{ playbook_dir }}/files/utilities-terminal.svg", "dest":"{{ ansible_env.HOME }}/Pictures/"}
+  
+# root Section
+- name: "Copying root Settings Files"
   copy:
-    src: "{{ playbook_dir }}/files/.bash_aliases"
-    dest: "{{ ansible_env.HOME }}/"
-- name: "Copying bashrc"
+    src: "{{item.src}}" 
+    dest: "{{item.dest}}"
+    mode: "preserve"
+  loop:
+    - {"src":"{{ playbook_dir }}/files/", "dest":"/root/"}
+    - {"src":"{{ playbook_dir }}/scripts/", "dest":"/root/bin/"}
+  become: true
+   
+- name: "Creating root vimrc"
   copy:
-    src: "{{ playbook_dir }}/files/.bashrc"
-    dest: "{{ ansible_env.HOME }}/"
-
-- name: "Creating vimrc"
-  copy:
-    dest: "{{ ansible_env.HOME}}/.vimrc"
+    dest: "/root/.vimrc"
     content: |
       set number
       syntax on
+  become: true
 
-- name: "Copying scripts files"
-  copy:
-    src: "{{ playbook_dir }}/scripts/"
-    dest: "{{ ansible_env.HOME }}/bin/"
-    mode: 0775
+
+# end root section
 
 - name: "Checking if dconf exists"
   stat:
@@ -45,10 +51,6 @@
     cmd: "dconf load /org/mate/ < {{ playbook_dir }}/files/mate.settings"
   when: dconf_command.stat.exists
 
-- name: "Copying icons"
-  copy:
-    src: "{{ playbook_dir }}/files/utilities-terminal.svg"
-    dest: "{{ ansible_env.HOME }}/Pictures/"
 
 - name: "Checking hackthebox Folder"
   stat:
@@ -58,33 +60,15 @@
 - name: "Copying Terminal icons"
   copy:
     src: "{{ playbook_dir }}/files/utilities-terminal.svg"
-    dest: "/usr/share/icons/hackthebox/22/apps/utilities-terminal.svg"
+    dest: "{{item.dest}}"
+    mode: "preserve"
   become: true
   become_method: sudo
-  when: htbicons_folder.stat.exists
-
-- name: "Copying Terminal icons"
-  copy:
-    src: "{{ playbook_dir }}/files/utilities-terminal.svg"
-    dest: "/usr/share/icons/hackthebox/32/apps/"
-  become: true
-  become_method: sudo
-  when: htbicons_folder.stat.exists
-
-- name: "Copying Terminal icons"
-  copy:
-    src: "{{ playbook_dir }}/files/utilities-terminal.svg"
-    dest: "/usr/share/icons/hackthebox/64/apps/"
-  become: true
-  become_method: sudo
-  when: htbicons_folder.stat.exists
-
-- name: "Copying Terminal icons"
-  copy:
-    src: "{{ playbook_dir }}/files/utilities-terminal.svg"
-    dest: "/usr/share/icons/hackthebox/24x24/apps/"
-  become: true
-  become_method: sudo
+  loop:
+    - {"dest":"/usr/share/icons/hackthebox/22/apps/"}
+    - {"dest":"/usr/share/icons/hackthebox/32/apps/"}
+    - {"dest":"/usr/share/icons/hackthebox/64/apps/"}
+    - {"dest":"/usr/share/icons/hackthebox/24x24/apps/"}
   when: htbicons_folder.stat.exists
 
 - name: "Copying Mate Settings Desktop"
