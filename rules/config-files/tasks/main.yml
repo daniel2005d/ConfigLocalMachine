@@ -16,7 +16,7 @@
     - {"src":"{{ playbook_dir }}/files/", "dest":"{{ ansible_env.HOME }}/"}
     - {"src":"{{ playbook_dir }}/scripts/", "dest":"{{ ansible_env.HOME }}/bin"}
     - {"src":"{{ playbook_dir }}/files/utilities-terminal.svg", "dest":"{{ ansible_env.HOME }}/Pictures/"}
-  
+   
 # root Section
 - name: "Copying root Settings Files"
   copy:
@@ -39,6 +39,11 @@
 
 # end root section
 
+- name: "Copy mate settings template"
+  template: 
+    src: "templates/mate.settings.j2"
+    dest: "/tmp/mate.settings"
+
 - name: "Checking if dconf exists"
   stat:
     path: "/usr/bin/dconf"
@@ -48,7 +53,7 @@
 
 - name: "Setting Mate Desktop"
   shell:
-    cmd: "dconf load /org/mate/ < {{ playbook_dir }}/files/mate.settings"
+    cmd: "dconf load /org/mate/ < /tmp/mate.settings"
   when: dconf_command.stat.exists
 
 
@@ -116,3 +121,17 @@
   shell: |
     cd {{ansible_env.HOME}}/.local/share/fonts/ && unzip -o /tmp/Hack.zip
   when: not hacknerd_fonts.stat.exists
+
+- name: "Change Grub delay "
+  replace:
+    path: '/etc/default/grub'
+    regexp: 'TIMEOUT=.*'
+    replace: 'TIMEOUT=1'
+  become: true
+  become_method: sudo
+
+- name: "Updating GRUB"
+  shell:
+    cmd: update-grub
+  become: true
+  become_method: sudo
