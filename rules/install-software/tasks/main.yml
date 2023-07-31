@@ -39,6 +39,7 @@
     - python3-venv
     - ssh
     - jq
+    - pipx
   become: true
   become_method: sudo
 
