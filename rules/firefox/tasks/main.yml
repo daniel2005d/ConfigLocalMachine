@@ -1,8 +1,8 @@
 ---
 - name: "Checinkg firefox"
   stat:
-    path: "/usr/share/firefox-esr/distribution"
-  register: firefox-esr
+    path: "/usr/share/firefox/distribution"
+  register: firefox_esr
 
 - name: "Updating firefox policies"
   template: 
@@ -10,6 +10,7 @@
     dest: "/usr/share/firefox/distribution/policies.json"
   become: true
   become_method: sudo
+  when: firefox_esr.stat.exists
 
 - name: "Updating ESR firefox"
   template: 
@@ -17,4 +18,3 @@
     dest: "/usr/share/firefox-esr/distribution/policies.json"
   become: true
   become_method: sudo
-  when: firefox.stat.exists
