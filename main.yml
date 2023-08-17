@@ -16,9 +16,9 @@
         - rules/firefox
         - rules/burpsuite
       when: '"Pentest" == ansible_env.ENV|default("")'
-  # roles:
-  #   - role: "rules/config-files"  
-  #   - role: "rules/install-software"
-  #   - role: "rules/visualstudio-code"
+   roles:
+     - role: "rules/config-files"  
+     - role: "rules/install-software"
+     - role: "rules/visualstudio-code"
      
 
