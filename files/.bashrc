@@ -77,7 +77,7 @@ if [ "$color_prompt" = yes ]; then
 fi
 
 unset color_prompt force_color_prompt
-set_ps1
+
 
 
 # enable color support of ls and also add handy aliases
@@ -121,6 +121,19 @@ if ! shopt -oq posix; then
   fi
 fi
 
+print_git(){
+  
+  if command -v git &>/dev/null
+  then
+    if [ -d .git ]; then
+      git_branch=$(git branch --show-current)
+      echo -e "\033[0;36m[ $git_branch]\033[0;31m"
+    else
+      echo -n ""
+    fi
+  fi
+}
+
 # Store the last directory in a variable
 export LAST_DIR="$PWD"
 
@@ -137,6 +150,9 @@ set_ps1(){
     esac
 
 }
+
+set_ps1
+
 # Function to check for directory change
 check_directory_change() {
     if [[ "$PWD" != "$LAST_DIR" ]]; then
@@ -149,18 +165,6 @@ check_directory_change() {
 PROMPT_COMMAND="check_directory_change"
 
 
-print_git(){
-  
-  if command -v git &>/dev/null
-  then
-    if [ -d .git ]; then
-      git_branch=$(git branch --show-current)
-      echo -e "\033[0;36m[ $git_branch]\033[0;31m"
-    else
-      echo -n ""
-    fi
-  fi
-}
 get_ip(){
   if command -v route &>/dev/null
   then
