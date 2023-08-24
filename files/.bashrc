@@ -58,11 +58,8 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
-if [ "$color_prompt" = yes ]; then
-  PS1="\[\033[0;31m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]root\[\033[01;33m\]@\[\033[01;96m\]$(get_ip)'; else echo '\[\033[0;39m\]\u\[\033[01;33m\]󱌖 \[\033[01;96m\]$(get_ip)'; fi)\[\033[0;31m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]\342\224\224\342\224\200\342\224\200\342\225\274 \[\033[0m\]\[\e[01;33m\]\\$\[\e[0m\] "
-else
-    PS1='┌──[\u@\h]─[\w]\n└──╼ \$ '
-fi
+
+
 
 # Set 'man' colors
 if [ "$color_prompt" = yes ]; then
@@ -80,16 +77,8 @@ if [ "$color_prompt" = yes ]; then
 fi
 
 unset color_prompt force_color_prompt
+set_ps1
 
-
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-  PS1="\[\033[0;31m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]root\[\033[01;33m\]@\[\033[01;96m\]$(get_ip)'; else echo '\[\033[0;39m\]\u\[\033[01;33m\]󱌖 \[\033[01;96m\]$(get_ip)'; fi)\[\033[0;31m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]\342\224\224\342\224\200\342\224\200\342\225\274 \[\033[0m\]\[\e[01;33m\]\\$\[\e[0m\] "
-    ;;
-*)
-    ;;
-esac
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -132,11 +121,54 @@ if ! shopt -oq posix; then
   fi
 fi
 
-function get_ip(){
-  iface=$(route -n  | grep -E "^0.0.0.0" | awk '{print $8}')
-  ip=$(/usr/sbin/ifconfig $iface 2>/dev/null| grep "inet " -m 1| awk '{print $2}') 2>/dev/null
-  if [[ -n $ip ]]; then
-    echo -e "$ip"
+# Store the last directory in a variable
+export LAST_DIR="$PWD"
+
+
+
+set_ps1(){
+    case "$TERM" in
+    xterm*|rxvt*)
+      PS1="\[\033[0;31m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]root\[\033[01;33m\]@\[\033[01;96m\]$(get_ip)'; else echo '\[\033[0;39m\]\u\[\033[01;33m\]󱌖 \[\033[01;96m\]$(get_ip)'; fi)\[\033[0;31m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]\342\224\224\342\224\200\342\224\200\342\225\274\[\033[0m\]$(print_git)\[\e[01;97m\] \[\e[0m\]"
+        ;;
+    *)
+    PS1="\[\033[0;31m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]root\[\033[01;33m\]@\[\033[01;96m\]$(get_ip)'; else echo '\[\033[0;39m\]\u\[\033[01;33m\]󱌖 \[\033[01;96m\]$(get_ip)'; fi)\[\033[0;31m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]\342\224\224\342\224\200\342\224\200\342\225\274\[\033[0m\]$(print_git)\[\e[01;97m\] \[\e[0m\]"
+        ;;
+    esac
+
+}
+# Function to check for directory change
+check_directory_change() {
+    if [[ "$PWD" != "$LAST_DIR" ]]; then
+        set_ps1
+        LAST_DIR="$PWD"
+    fi
+}
+
+# Set PROMPT_COMMAND to call the check_directory_change function
+PROMPT_COMMAND="check_directory_change"
+
+
+print_git(){
+  
+  if command -v git &>/dev/null
+  then
+    if [ -d .git ]; then
+      git_branch=$(git branch --show-current)
+      echo -e "\033[0;36m[ $git_branch]\033[0;31m"
+    else
+      echo -n ""
+    fi
+  fi
+}
+get_ip(){
+  if command -v route &>/dev/null
+  then
+    iface=$(route -n  | grep -E "^0.0.0.0" | awk '{print $8}')
+    ip=$(/usr/sbin/ifconfig $iface 2>/dev/null| grep "inet " -m 1| awk '{print $2}') 2>/dev/null
+    if [[ -n $ip ]]; then
+      echo -e "$ip"
+    fi
   fi
 
 }
