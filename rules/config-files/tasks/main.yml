@@ -43,6 +43,7 @@
   template: 
     src: "templates/mate.settings.j2"
     dest: "/tmp/mate.settings"
+  when: '"BSPWN" != ansible_env.DESKTOP|default("")'
 
 - name: "Checking if dconf exists"
   stat:
@@ -50,17 +51,18 @@
   register: dconf_command
   become: true
   become_method: sudo
+  when: '"BSPWN" != ansible_env.DESKTOP|default("")'
 
 - name: "Setting Mate Desktop"
   shell:
     cmd: "dconf load / < /tmp/mate.settings"
   when: dconf_command.stat.exists
-
-
+  
 - name: "Checking hackthebox Folder"
   stat:
     path: "/usr/share/icons/hackthebox"
   register: htbicons_folder
+  when: '"BSPWN" != ansible_env.DESKTOP|default("")'
 
 - name: "Copying Terminal icons"
   copy:
@@ -92,6 +94,7 @@
       Name=mate-terminal
   become: true
   become_method: sudo
+  when: '"BSPWN" != ansible_env.DESKTOP|default("")'
 
 - name: "Checking folder fonts"
   stat:

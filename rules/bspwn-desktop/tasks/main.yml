@@ -1,0 +1,28 @@
+---
+# tasks file for rules/bspwn-desktop
+- name: "Install bspwm sxhkd"
+  apt:
+    name: bspwm,sxhkd
+    update_cache: true
+    state: present
+  become: true
+  become_method: sudo
+
+
+- name: "Copy bspwn files"
+  copy:
+    src: "{{role_path}}/files/bspwmrc" 
+    dest: "{{ansible_env.HOME}}/.config/bspwmrc"
+    mode: "preserve"
+  
+- name: "Copy sxhkd files"
+  copy:
+    src: "{{role_path}}/files/sxhkdrc" 
+    dest: "{{ansible_env.HOME}}/.config/sxhkdrc"
+    mode: "preserve"
+
+- name: "Copy polybar files"
+  copy:
+    src: "{{role_path}}/files/polybar/" 
+    dest: "{{ansible_env.HOME}}/.config/"
+    mode: "preserve"
