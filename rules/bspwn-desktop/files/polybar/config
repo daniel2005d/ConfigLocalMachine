@@ -225,7 +225,7 @@ click-left = ~/.config/polybar/get_window_titles.sh
 
 [module/ip]
 type = custom/script
-exec = /home/cyb3rb0b/bin/getip.sh
+exec = $HOME/bin/getip.sh
 format = <label>
 #format-prefix-foreground = #FF0000
 format-underline = #9fef00

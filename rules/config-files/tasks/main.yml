@@ -39,30 +39,33 @@
 
 # end root section
 
-- name: "Copy mate settings template"
-  template: 
-    src: "templates/mate.settings.j2"
-    dest: "/tmp/mate.settings"
-  when: '"BSPWN" != ansible_env.DESKTOP|default("")'
-
 - name: "Checking if dconf exists"
   stat:
     path: "/usr/bin/dconf"
   register: dconf_command
   become: true
   become_method: sudo
-  when: '"BSPWN" != ansible_env.DESKTOP|default("")'
+
+- name: "Copy mate settings template"
+  template: 
+    src: "templates/mate.settings.j2"
+    dest: "/tmp/mate.settings"
+  when: dconf_command.stat.exists == true and lookup('env', 'DESKTOP') != 'BSPWN'
+
+- name: "Debug"
+  debug:
+    msg: {dconf_command}
 
 - name: "Setting Mate Desktop"
   shell:
     cmd: "dconf load / < /tmp/mate.settings"
-  when: dconf_command.stat.exists == true and '"BSPWN" != ansible_env.DESKTOP|default("")'
+  when: dconf_command.stat.exists and lookup('env', 'DESKTOP') != 'BSPWN'
   
 - name: "Checking hackthebox Folder"
   stat:
     path: "/usr/share/icons/hackthebox"
   register: htbicons_folder
-  when: '"BSPWN" != ansible_env.DESKTOP|default("")'
+  
 
 - name: "Copying Terminal icons"
   copy:
@@ -76,7 +79,7 @@
     - {"dest":"/usr/share/icons/hackthebox/32/apps/"}
     - {"dest":"/usr/share/icons/hackthebox/64/apps/"}
     - {"dest":"/usr/share/icons/hackthebox/24x24/apps/"}
-  when: htbicons_folder.stat.exists
+  when: htbicons_folder.stat.exists == true
 
 - name: "Copying Mate Settings Desktop"
   copy:

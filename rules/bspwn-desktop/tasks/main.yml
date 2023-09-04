@@ -1,13 +1,17 @@
 ---
 # tasks file for rules/bspwn-desktop
+- name: "Creating polybar folder"
+  file:
+    path: "{{ansible_env.HOME}}/.config/polybar"
+    state: directory
+
 - name: "Install bspwm sxhkd"
   apt:
-    name: bspwm,sxhkd
+    name: bspwm,sxhkd, polybar
     update_cache: true
     state: present
   become: true
   become_method: sudo
-
 
 - name: "Copy bspwn files"
   copy:
@@ -23,6 +27,11 @@
 
 - name: "Copy polybar files"
   copy:
-    src: "{{role_path}}/files/polybar/" 
-    dest: "{{ansible_env.HOME}}/.config/lsblk -o "
+    src: "{{role_path}}/files/polybar/{{item}}"
+    dest: "{{ansible_env.HOME}}/.config/polybar/{{item}}"
     mode: "preserve"
+  loop:
+    - config
+    - get_window_titles.sh
+    - launch.sh
+    - select_window.sh
