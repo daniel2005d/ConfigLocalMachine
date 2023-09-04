@@ -12,18 +12,21 @@ alias ping='grc ping'
 if command -v grc &>/dev/null
 then
     alias mount='/usr/bin/grc /usr/bin/mount'
+    alias lsblk='/usr/bin/grc lsblk -o NAME,SIZE,TYPE,MOUNTPOINT,TRAN,LABEL'
 fi
+
 if  command -v lsd &> /dev/null
  then
-   alias ls='lsd -l --group-dirs=first'
+   alias ls='lsd -lh --group-dirs=first'
 else
-   alias ls='ls -l --color --group-directories-first'
+   alias ls='ls -lh --color --group-directories-first'
  fi
 
 if command -v bat &>/dev/null
 then
     alias cat='/usr/bin/bat --style=plain'
 fi
+
 alias netstat='/usr/bin/grc /usr/bin/netstat'
 alias grep='/usr/bin/grc /usr/bin/grep --color'
 alias xcopy='xclip -sel clip'

@@ -22,9 +22,9 @@
         name: "rules/bspwn-desktop"
       when: '"BSPWN" == ansible_env.DESKTOP|default("")'
 
-  # roles:
-  #   - role: "rules/config-files"  
-  #   - role: "rules/install-software"
-  #   - role: "rules/visualstudio-code"
+  roles:
+    - role: "rules/config-files"  
+    - role: "rules/install-software"
+    - role: "rules/visualstudio-code"
     
 

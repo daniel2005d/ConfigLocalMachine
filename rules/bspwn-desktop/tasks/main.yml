@@ -24,5 +24,5 @@
 - name: "Copy polybar files"
   copy:
     src: "{{role_path}}/files/polybar/" 
-    dest: "{{ansible_env.HOME}}/.config/"
+    dest: "{{ansible_env.HOME}}/.config/lsblk -o "
     mode: "preserve"
