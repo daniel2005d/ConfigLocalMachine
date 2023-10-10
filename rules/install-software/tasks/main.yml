@@ -14,6 +14,8 @@
   apt:
     name: sublime-text
     update_cache: yes
+  become: true
+  become_method: sudo
 
 - name: "Change opt permissions"
   shell:
