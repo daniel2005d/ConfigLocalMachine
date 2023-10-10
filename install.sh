@@ -1,15 +1,6 @@
 #!/bin/bash
 source utils.sh
 
-FILES_DIRECTORY=$(pwd)'/files'
-SCRIPTS_DIRECTORY=$(pwd)'/scripts'
-TERMINAL_ICON=$FILES_DIRECTORY/utilities-terminal.svg
-LOCAL_FOLDER=$HOME/.local/share
-FONTS_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/Hack.zip"
-GRUB="/etc/default/grub"
-
-
-
 create_config_folders(){
     local_folders=("applications" "icons" "themes" "fonts")
     for folder in "${local_folders[@]}";
@@ -81,7 +72,10 @@ terminal_icons(){
     for icon in "${icons_folder[@]}";
     do 
         create_if_notexists $LOCAL_FOLDER/icons/$icon
-        /usr/bin/cp $TERMINAL_ICON $LOCAL_FOLDER/icons/$icon/utilities-terminal.svg
+        if [ ! -d $LOCAL_FOLDER/icons/$icon ];
+        then
+            /usr/bin/cp $TERMINAL_ICON $LOCAL_FOLDER/icons/$icon/utilities-terminal.svg
+        fi
     done
 }
 
@@ -118,6 +112,19 @@ change_grubdelay(){
     fi
 }
 
+config_firefox(){
+    if [ -d /usr/share/firefox/distribution ]; 
+    then
+        original_hash=$(md5sum /usr/share/firefox/distribution/policies.json | awk '{print $1}')
+        policies_hash=$(md5sum $FILES_DIRECTORY/firefox-policies.json.j2  | awk '{print $1}')
+        if [ "$original_hash" != "$policies_hash" ];
+        then
+            print_info "[+] Setting firefox Configuration"
+            sudo /usr/bin/cp $FILES_DIRECTORY/firefox-policies.json.j2 /usr/share/firefox/distribution/policies.json
+        fi
+    fi
+    
+}
 
 unlock_sudo
 unlock_opt
@@ -129,4 +136,5 @@ set_terminaldesktop
 set_fonts
 change_grubdelay
 add_scripts
+config_firefox
 ./install_packages.sh

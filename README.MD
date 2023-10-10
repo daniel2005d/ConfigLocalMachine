@@ -2,5 +2,5 @@
 
 ```bash
 
-ansible-playbook main.yml
+Ansible dependencies are removed and replaced by a bash script.
 ```
