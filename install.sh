@@ -81,7 +81,7 @@ terminal_icons(){
     for icon in "${icons_folder[@]}";
     do 
         create_if_notexists $LOCAL_FOLDER/icons/$icon
-        /usr/bin/cp $TERMINAL_ICON $LOCAL_FOLDER/icons/utilities-terminal.svg
+        /usr/bin/cp $TERMINAL_ICON $LOCAL_FOLDER/icons/$icon/utilities-terminal.svg
     done
 }
 
