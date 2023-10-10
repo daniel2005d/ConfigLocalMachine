@@ -72,15 +72,15 @@ config_desktop(){
 }
 
 terminal_icons(){
-    print_info "Copy Environment Icons $TERMINAL_ICON"
-    icons_folder=("/hackthebox/22/apps/" "/hackthebox/32/apps/"
-      "/hackthebox/64/apps/"
-      "/hackthebox/24x24/apps/")
+    print_info "[+] Copy Environment Icons $TERMINAL_ICON"
+    icons_folder=("/hackthebox/icons" "/hackthebox/22/apps" "/hackthebox/32/apps"
+      "/hackthebox/64/apps"
+      "/hackthebox/24x24/apps")
     
   
     for icon in "${icons_folder[@]}";
     do 
-    
+        create_if_notexists $LOCAL_FOLDER/icons/$icon
         /usr/bin/cp $TERMINAL_ICON $LOCAL_FOLDER/icons/utilities-terminal.svg
     done
 }
@@ -92,14 +92,17 @@ set_terminaldesktop(){
 }
 
 set_fonts(){
-    if [ -d $LOCAL_FOLDER/fonts ];
+    if [ ! -f $LOCAL_FOLDER/fonts/HackNerdFontMono-Regular.ttf ];
     then
-        print_info "Downloading Hack Nerd Fonts"
-        /usr/bin/wget $FONTS_URL -O /tmp/hack.zip
-        if [ -f /tmp/hack.zip ];
+        if [ -d $LOCAL_FOLDER/fonts ];
         then
-            print_info "Inflating Fonts"    
-            /usr/bin/unzip /tmp/hack.zip -d $LOCAL_FOLDER/fonts/
+            print_info "Downloading Hack Nerd Fonts"
+            /usr/bin/wget $FONTS_URL -O /tmp/hack.zip
+            if [ -f /tmp/hack.zip ];
+            then
+                print_info "Inflating Fonts"    
+                /usr/bin/unzip /tmp/hack.zip -d $LOCAL_FOLDER/fonts/
+            fi
         fi
     fi
 }
@@ -110,7 +113,7 @@ change_grubdelay(){
         sudo sed -i 's/TIMEOUT=.*/TIMEOUT=1/g' $GRUB
         if [ $? -eq 0 ];
         then
-            sudo /usr/sbin/update-grub
+            sudo /usr/sbin/update-grub &>/dev/null
         fi
     fi
 }

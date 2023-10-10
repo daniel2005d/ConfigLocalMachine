@@ -3,8 +3,8 @@
 Version=1.0
 Type=Application
 Terminal=false
-Icon=custom_HOME/Pictures/utilities-terminal.svg
-Icon[en_US]=custom_HOME/Pictures/utilities-terminal.svg
+Icon=custom_HOME/.local/share/icons/hackthebox/icons/utilities-terminal.svg
+Icon[en_US]=custom_HOME/.local/share/icons/hackthebox/icons/utilities-terminal.svg
 Name[en_US]=mate-terminal
 Exec=/usr/bin/mate-terminal
 Name=mate-terminal
