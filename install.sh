@@ -128,13 +128,14 @@ config_firefox(){
 
 unlock_sudo
 unlock_opt
+config_firefox
 create_config_folders
 config_terminal
-config_desktop
 terminal_icons
-set_terminaldesktop
 set_fonts
 change_grubdelay
 add_scripts
-config_firefox
+config_desktop
+set_terminaldesktop
+
 ./install_packages.sh

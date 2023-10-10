@@ -100,7 +100,7 @@ sort-column='name'
 sort-directories-first=true
 sort-order='ascending'
 type-format='category'
-window-position=(545, 208)
+window-position=(545, 192)
 window-size=(830, 623)
 
 [org/mate/atril/default]
@@ -162,16 +162,19 @@ picture-filename='/usr/share/backgrounds/parrot-splash.jpg'
 picture-options='zoom'
 primary-color='rgb(44,0,30)'
 secondary-color='rgb(44,0,30)'
+show-desktop-icons=false
 
 [org/mate/desktop/file-sharing]
 bluetooth-notify=true
 
 [org/mate/desktop/interface]
+buttons-have-icons=true
 gtk-color-scheme='fg_color:#EEEEEE\nbg_color:#2d2d2d\ntext_color:#BBBBBB\nbase_color:#292929\nselected_fg_color:#f9f9f9\nselected_bg_color:#5179a6\ntooltip_fg_color:#dedede\ntooltip_bg_color:#2d2d2d'
 gtk-decoration-layout='close,maximize,minimize:menu'
 gtk-theme='ARK-Dark'
 icon-theme='hackthebox'
 menubar-detachable=true
+menus-have-icons=true
 
 [org/mate/desktop/keybindings/custom0]
 action='mate-terminal'
@@ -279,7 +282,9 @@ background-color='rgb(0,0,0)'
 use-background-color=true
 
 [org/mate/marco/general]
-button-layout='close,maximize,minimize:menu'
+action-double-click-titlebar='toggle_maximize'
+auto-raise-delay=500
+button-layout='close,minimize,maximize:'
 center-new-windows=false
 compositing-manager=true
 num-workspaces=4
@@ -366,6 +371,8 @@ position=1692
 toplevel-id='toplevel-0'
 
 [org/mate/panel/toplevels/toplevel-0]
+auto-hide=false
+enable-buttons=false
 expand=true
 monitor=0
 orientation='top'
@@ -378,7 +385,7 @@ y-bottom=-1
 type='none'
 
 [org/mate/pluma]
-active-plugins=['changecase', 'sort', 'time', 'docinfo', 'taglist', 'filebrowser', 'spell', 'modelines']
+active-plugins=['time', 'taglist', 'spell', 'sort', 'modelines', 'filebrowser', 'docinfo', 'changecase']
 auto-indent=true
 bottom-panel-visible=false
 bracket-matching=true
