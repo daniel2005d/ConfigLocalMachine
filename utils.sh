@@ -6,6 +6,7 @@ redColour="\e[31m"
 blueColour="\e[34m"
 magentaColour="\e[34m"
 reset="\e[0m"
+
 INSTALLERS=$(pwd)'/installer'
 FILES_DIRECTORY=$(pwd)'/files'
 SCRIPTS_DIRECTORY=$(pwd)'/scripts'
@@ -13,7 +14,7 @@ TERMINAL_ICON=$FILES_DIRECTORY/utilities-terminal.svg
 LOCAL_FOLDER=$HOME/.local/share
 FONTS_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/Hack.zip"
 GRUB="/etc/default/grub"
-
+ERROR_FILE="log.txt"
 
 print_info(){
     color=$2

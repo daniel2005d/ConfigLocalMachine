@@ -95,7 +95,7 @@ set_fonts(){
             if [ -f /tmp/hack.zip ];
             then
                 print_info "Inflating Fonts"    
-                /usr/bin/unzip /tmp/hack.zip -d $LOCAL_FOLDER/fonts/
+                /usr/bin/unzip /tmp/hack.zip -d $LOCAL_FOLDER/fonts/ &>/dev/null
             fi
         fi
     fi

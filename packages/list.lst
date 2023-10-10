@@ -31,3 +31,5 @@ script|cme.sh
 script|code.sh
 git|https://github.com/Flangvik/SharpCollection.git|/opt
 script:burp.sh
+go|github.com/jpillora/chisel@latest
+apt|responder
