@@ -4,7 +4,7 @@ source utils.sh
 
 PACKAGES_FILE=$(pwd)/packages/list.lst
 print_info "Installing Software"
-#apt update &>/dev/null
+apt update &>/dev/null
 if [ $? -eq 0 ];
 then
     packages=$(/usr/bin/cat $PACKAGES_FILE)
@@ -18,8 +18,9 @@ then
             print_info "Install python package $package_name"  
             pip install $package_name
         elif [ $package_type == 'git' ]; then
-            destination=$(echo $line | cut -d '|' -f3)
-            
+                
+                destination=$(echo $line | cut -d '|' -f3)
+                print_info "Cloning $destination"  
                 create_if_notexists $destination
                 cd $destination
                 git clone $package_name
