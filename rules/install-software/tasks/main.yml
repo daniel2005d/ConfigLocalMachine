@@ -10,6 +10,11 @@
     echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
   when: not subl_command.stat.exists
 
+- name: "Installing Sublime"
+  apt:
+    name: sublime-text
+    update_cache: yes
+
 - name: "Change opt permissions"
   shell:
     cmd: chown -R {{ ansible_env.USER}}:{{ ansible_env.USER}} /opt
@@ -22,7 +27,6 @@
     state: present
   loop:
     - xclip
-    - sublime-text
     - build-essential
     - dkms
     - linux-headers-{{ansible_kernel}}
