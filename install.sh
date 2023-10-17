@@ -112,23 +112,8 @@ change_grubdelay(){
     fi
 }
 
-config_firefox(){
-    if [ -d /usr/share/firefox/distribution ]; 
-    then
-        original_hash=$(md5sum /usr/share/firefox/distribution/policies.json | awk '{print $1}')
-        policies_hash=$(md5sum $FILES_DIRECTORY/firefox-policies.json.j2  | awk '{print $1}')
-        if [ "$original_hash" != "$policies_hash" ];
-        then
-            print_info "[+] Setting firefox Configuration"
-            sudo /usr/bin/cp $FILES_DIRECTORY/firefox-policies.json.j2 /usr/share/firefox/distribution/policies.json
-        fi
-    fi
-    
-}
-
 unlock_sudo
 unlock_opt
-config_firefox
 create_config_folders
 config_terminal
 terminal_icons
