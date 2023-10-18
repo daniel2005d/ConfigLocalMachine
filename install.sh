@@ -1,6 +1,20 @@
 #!/bin/bash
 source utils.sh
 
+banner(){
+    echo -e """
+    
+░█████╗░░█████╗░███╗░░██╗███████╗██╗░██████╗░
+██╔══██╗██╔══██╗████╗░██║██╔════╝██║██╔════╝░
+██║░░╚═╝██║░░██║██╔██╗██║█████╗░░██║██║░░██╗░
+██║░░██╗██║░░██║██║╚████║██╔══╝░░██║██║░░╚██╗
+╚█████╔╝╚█████╔╝██║░╚███║██║░░░░░██║╚██████╔╝
+░╚════╝░░╚════╝░╚═╝░░╚══╝╚═╝░░░░░╚═╝░╚═════╝░
+
+$yellowColour Version: 0.3 $reset
+    """
+}
+
 create_config_folders(){
     local_folders=("applications" "icons" "themes" "fonts")
     for folder in "${local_folders[@]}";
@@ -35,7 +49,8 @@ add_scripts(){
 
     if [ -d $HOME/bin ];
     then
-            /usr/bin/cp $SCRIPTS_DIRECTORY/* $HOME/bin/ 
+        print_info "[+] Creating Scripts files"
+        /usr/bin/cp $SCRIPTS_DIRECTORY/* $HOME/bin/
     fi
 }
 
@@ -78,6 +93,13 @@ terminal_icons(){
             /usr/bin/cp $TERMINAL_ICON $LOCAL_FOLDER/icons/$icon/utilities-terminal.svg
         fi
     done
+
+    if [ -d $GLOBAL_ICONS_FOLDER/hackthebox ];
+    then
+        print_info "[+] Custom toolbar Icons"
+        sudo /usr/bin/cp $ICONS_DIRECTORY/* $GLOBAL_ICONS_FOLDER/hackthebox/64/apps/
+    fi
+    
 }
 
 set_terminaldesktop(){
@@ -113,6 +135,7 @@ change_grubdelay(){
     fi
 }
 
+banner
 unlock_sudo
 unlock_opt
 create_config_folders
