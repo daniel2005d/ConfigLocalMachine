@@ -31,13 +31,14 @@ add_scripts(){
     if [ ! -d $HOME/bin ];
     then
         /usr/bin/mkdir $HOME/bin
-       
-        if [ $? -eq 0 ];
-        then
+    fi
+
+    if [ -d $HOME/bin ];
+    then
             /usr/bin/cp $SCRIPTS_DIRECTORY/* $HOME/bin/ 
-        fi
     fi
 }
+
 config_terminal(){
     
     if [ -d "$FILES_DIRECTORY" ];

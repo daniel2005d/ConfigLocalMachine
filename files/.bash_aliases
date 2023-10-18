@@ -93,18 +93,20 @@ fi
 #bindkey '5C' forward-word
 
 function rmk(){
-  scrub -p dod $1; shred -zun 10 -v $1
+  if command  -v scrub &>/dev/null; then
+    scrub -p dod $1; shred -zun 10 -v $1
+  else
+    rm $1
+  fi
 }
 
-function add2git(){
-   if [ "$#" -ne 1 ]; then
-       echo -e "You must especified the commit comment"
-   else
-	   echo -e "Adding 2 git repository.."
-	   git add .
-  	 git commit -m "$1"
-	   git push origin master
-   fi
+function settarget(){
+  if [ -f $1 ]; then
+    echo "">$HOME/.config/.target
+  else
+    echo $1> $HOME/.config/.target
+  fi
+
 }
 
 function help(){
