@@ -11,7 +11,8 @@ banner(){
 ╚█████╔╝╚█████╔╝██║░╚███║██║░░░░░██║╚██████╔╝
 ░╚════╝░░╚════╝░╚═╝░░╚══╝╚═╝░░░░░╚═╝░╚═════╝░
 
-$yellowColour Version: 0.3 $reset
+$yellowColour Version: 0.3 
+Desktop: $$XDG_CURRENT_DESKTOP $reset
     """
 }
 
