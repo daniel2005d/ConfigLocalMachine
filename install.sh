@@ -11,8 +11,8 @@ banner(){
 ╚█████╔╝╚█████╔╝██║░╚███║██║░░░░░██║╚██████╔╝
 ░╚════╝░░╚════╝░╚═╝░░╚══╝╚═╝░░░░░╚═╝░╚═════╝░
 
-$yellowColour Version: 0.3 
-Desktop: $$XDG_CURRENT_DESKTOP $reset
+$yellowColour Version: 0.4 
+Desktop: $XDG_CURRENT_DESKTOP $reset
     """
 }
 
@@ -136,16 +136,26 @@ change_grubdelay(){
     fi
 }
 
-banner
-unlock_sudo
-unlock_opt
-create_config_folders
-config_terminal
-terminal_icons
-set_fonts
-change_grubdelay
-add_scripts
-config_desktop
-set_terminaldesktop
+setxfcpanel(){
+    
+    if [ "$XDG_CURRENT_DESKTOP" = "XFCE" ];
+    then
+        print_info $greenColour "Setting XFCE Panels" $reset
+        cp -rv $(pwd)/desktop/xfce/panel/* $HOME/.config/xfce4/panel/
+    fi
+}
 
-./install_packages.sh
+banner
+# unlock_sudo
+# unlock_opt
+# create_config_folders
+# config_terminal
+# terminal_icons
+# set_fonts
+# change_grubdelay
+# add_scripts
+# config_desktop
+# set_terminaldesktop
+setxfcpanel
+
+#./install_packages.sh

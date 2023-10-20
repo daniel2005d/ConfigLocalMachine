@@ -13,7 +13,7 @@ then
 
     TARGET=$(cat $HOME/.config/.target)
 
-    if [ $XDG_CURRENT_DESKTOP == "XFCE" ];
+    if [ "$XDG_CURRENT_DESKTOP" = "XFCE" ];
     then
         echo "<icon>target</icon><txt><span weight='Bold' fgcolor='#9fef00'>$TARGET</span></txt>"
     

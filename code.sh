@@ -12,7 +12,9 @@ then
     if [ ! -f /usr/bin/code ];
     then
         print_info "Creating Symlink to Code"
-        sudo ln -s /usr/bin/codium /usr/bin/code
+        if [ -f /usr/bin/codium ];then
+            sudo ln -s /usr/bin/codium /usr/bin/code
+        fi
     fi
 
     print_info "Installing Extensions"
