@@ -156,6 +156,5 @@ change_grubdelay
 add_scripts
 config_desktop
 set_terminaldesktop
-setxfcpanel
 
 ./install_packages.sh
