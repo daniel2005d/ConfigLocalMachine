@@ -1,0 +1,6 @@
+Command=/home/daniel/bin/xfce.toolbar.date.sh
+UseLabel=0
+Text=(genmon)
+UpdatePeriod=2000
+Font=Cantarell 11
+
