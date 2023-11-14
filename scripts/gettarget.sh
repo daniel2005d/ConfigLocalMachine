@@ -13,9 +13,15 @@ then
 
     TARGET=$(cat $HOME/.config/.target)
 
-    if [ "$XDG_CURRENT_DESKTOP" = "XFCE" ];
+    if [ $XDG_CURRENT_DESKTOP == "XFCE" ];
     then
-        echo "<icon>target</icon><txt><span weight='Bold' fgcolor='#9fef00'>$TARGET</span></txt>"
+        if [[ $TARGET != "" ]]; then
+		    echo "<icon>target</icon><txt><span weight='Bold' fgcolor='#9fef00'>$TARGET</span></txt>"
+        else
+            PUBLIC_IP=$(curl -s https://ifconfig.me)
+            echo "<icon>internet</icon><txt><span weight='Bold' fgcolor='#9fef00'>$PUBLIC_IP</span></txt>"
+		fi
+        
     
     else
         echo "󰓾  $TARGET"

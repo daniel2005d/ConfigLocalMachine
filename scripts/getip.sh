@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ip=$(hostname -I | grep -E "[0-9]{1,}\.[0-9]{1,}\.[0-9]{1,}\.[0-9]{1,}" -o)
+ip=$(hostname -I | awk '{print $1}' | grep -E "[0-9]{1,}\.[0-9]{1,}\.[0-9]{1,}\.[0-9]{1,}" -o)
     if [ "$XDG_CURRENT_DESKTOP" = "XFCE" ];
     then
     	if [ $ip != "" ];
