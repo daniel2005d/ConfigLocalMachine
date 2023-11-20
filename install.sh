@@ -16,6 +16,9 @@ Desktop: $XDG_CURRENT_DESKTOP $reset
     """
 }
 
+setterminal(){
+    chsh -s /bin/bash
+}
 create_config_folders(){
     local_folders=("applications" "icons" "themes" "fonts")
     for folder in "${local_folders[@]}";
@@ -157,4 +160,5 @@ add_scripts
 config_desktop
 set_terminaldesktop
 setxfcpanel
+setterminal
 ./install_packages.sh
