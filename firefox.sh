@@ -1,4 +1,5 @@
 #!/bin/bash
+source utils.sh
 
 setsettings(){
     if [ -d $1 ]; 
@@ -13,5 +14,10 @@ setsettings(){
     fi
 }
 
-setsettings /usr/share/firefox/distribution
-setsettings /usr/share/firefox-esr/distribution
+if [[ -d /usr/share/firefox/distribution ]];then
+    print_info "Setting into Firefox FOlder"
+    setsettings /usr/share/firefox/distribution
+else
+    print_info "Setting into Firefox-ESR Folder"
+    setsettings /usr/share/firefox-esr/distribution
+fi

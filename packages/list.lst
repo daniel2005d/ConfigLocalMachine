@@ -36,3 +36,5 @@ apt|responder
 apt|openjdk-17-jdk
 apt|hydra
 apt|crunch
+apt|tor
+script|configurations_shortcuts.sh
