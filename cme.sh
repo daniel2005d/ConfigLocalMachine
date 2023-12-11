@@ -2,10 +2,8 @@
 
 source utils.sh
 
-if [ ! -d /opt/CrackMapExec ]; then
-    cd /opt/
-    git clone https://github.com/Porchetta-Industries/CrackMapExec
-    cd /opt/CrackMapExec;pipx install .
-    cd -
-     
+if [ ! -d /opt/NetExec ]; then
+    sudo apt install pipx
+    pipx ensurepath
+    pipx install git+https://github.com/Pennyw0rth/NetExec
 fi
