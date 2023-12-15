@@ -5,7 +5,7 @@ ip=$(hostname -I | awk '{print $1}' | grep -E "[0-9]{1,}\.[0-9]{1,}\.[0-9]{1,}\.
     then
     	if [ $ip != "" ];
     	then
-        	echo "<icon>currentip</icon><txt><span fgcolor='#cc9b06' >  $ip</span></txt>"
+        	echo "<icon>agave</icon><txt><span fgcolor='#cc9b06' >  $ip</span></txt>"
         else
         	echo "<icon>noipservice</icon><txt><span fgcolor='#cc9b06' >  $ip</span></txt>"
         fi

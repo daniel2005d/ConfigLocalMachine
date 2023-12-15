@@ -168,7 +168,7 @@ PROMPT_COMMAND="check_directory_change"
 get_ip(){
   if command -v route &>/dev/null
   then
-    iface=$(route -n  | grep -E "^0.0.0.0" | awk '{print $8}')
+    iface=$(route -n  | grep -E "^0.0.0.0" | awk '{print $8}' | head -n 1)
     ip=$(/usr/sbin/ifconfig $iface 2>/dev/null| grep "inet " -m 1| awk '{print $2}') 2>/dev/null
     if [[ -n $ip ]]; then
       echo -e "$ip"
