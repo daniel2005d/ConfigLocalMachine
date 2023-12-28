@@ -37,4 +37,5 @@ apt|openjdk-17-jdk
 apt|hydra
 apt|crunch
 apt|tor
+apt|xxd
 script|configurations_shortcuts.sh

@@ -127,6 +127,11 @@ function getPorts(){
 	echo -e "\e[3;92m[+]\e[0m Ports \e[1;33m$ports \e[0mcopied to clipboard"
 }
 
+function setjdk11(){
+  export PATH="/usr/lib/jvm/java-11-openjdk-amd64/bin:$PATH"
+  java --version
+}
+
 # Set 'man' colors
 if [ "$color_prompt" = yes ]; then
         man() {
