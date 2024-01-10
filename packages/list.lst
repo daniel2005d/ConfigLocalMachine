@@ -38,4 +38,6 @@ apt|hydra
 apt|crunch
 apt|tor
 apt|xxd
+apt|smbclient
+apt|smbmap
 script|configurations_shortcuts.sh
