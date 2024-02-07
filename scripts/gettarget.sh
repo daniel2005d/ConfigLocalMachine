@@ -16,7 +16,7 @@ then
     if [ $XDG_CURRENT_DESKTOP == "XFCE" ];
     then
         if [[ $TARGET != "" ]]; then
-		    echo "<icon>target</icon><txt><span weight='Bold' fgcolor='#9fef00'>$TARGET</span></txt>"
+		    echo "<icon>rabbitvcs</icon><txt><span weight='Bold' fgcolor='#9fef00'>$TARGET</span></txt>"
         else
             PUBLIC_IP=$(curl -s https://ifconfig.me)
             echo "<icon>internet</icon><txt><span weight='Bold' fgcolor='#9fef00'>$PUBLIC_IP</span></txt>"
