@@ -31,6 +31,7 @@ git|https://github.com/drwetter/testssl.sh|/opt
 script|cme.sh
 script|code.sh
 git|https://github.com/Flangvik/SharpCollection.git|/opt
+git|https://github.com/daniel2005d/mapXplore.git|/opt
 script|burp.sh
 go|github.com/jpillora/chisel@latest
 apt|responder
