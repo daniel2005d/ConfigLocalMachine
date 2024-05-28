@@ -11,6 +11,7 @@ alias nmap='grc nmap'
 alias ping='grc ping'
 if command -v grc &>/dev/null
 then
+    alias ip='/usr/bin/grc /usr/bin/ip'
     alias mount='/usr/bin/grc /usr/bin/mount'
     alias lsblk='/usr/bin/grc lsblk -o NAME,SIZE,TYPE,MOUNTPOINT,TRAN,LABEL'
 fi
