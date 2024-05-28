@@ -37,6 +37,7 @@ go|github.com/jpillora/chisel@latest
 apt|responder
 apt|openjdk-17-jdk
 apt|hydra
+apt|exiftool
 apt|crunch
 apt|tor
 apt|xxd
