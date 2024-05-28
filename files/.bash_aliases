@@ -3,17 +3,26 @@ RED="\e[31m"
 END="\e[0m"
 YELLOW="\[33m"
 
-alias ifconfig='grc /usr/sbin/ifconfig'
-alias dh='grc dh'
-alias free='grc /usr/bin/free'
-alias df='grc df -h'
-alias nmap='grc nmap'
-alias ping='grc ping'
-if command -v grc &>/dev/null
-then
-    alias ip='/usr/bin/grc /usr/bin/ip'
-    alias mount='/usr/bin/grc /usr/bin/mount'
-    alias lsblk='/usr/bin/grc lsblk -o NAME,SIZE,TYPE,MOUNTPOINT,TRAN,LABEL'
+if command -v grc &> /dev/null; then
+    alias ifconfig='grc /usr/sbin/ifconfig'
+    alias dh='grc dh'
+    alias free='grc /usr/bin/free'
+    alias df='grc df -h'
+    alias nmap='grc nmap'
+    alias ping='grc ping'
+    alias colourify='grc -es'
+    alias grep='colourify grep'
+    alias egrep='colourify egrep'
+    alias ss='colourify ss'
+    alias ip='colourify ip'
+    alias fgrep='colourify fgrep'
+    alias diff='colourify diff'
+    alias tail='colourify tail'
+    alias dig='colourify dig'
+    alias du='colourify du'
+    alias traceroute='colourify traceroute'
+    alias netstat='colourify netstat'
+    alias make='colourify make'
 fi
 
 if  command -v lsd &> /dev/null
