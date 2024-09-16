@@ -26,7 +26,7 @@ script|ffuf.sh
 script|sqlmap.sh
 git|https://github.com/insidetrust/statistically-likely-usernames.git|/opt/wordlists
 git|https://github.com/daniel2005d/mapXplore|/opt/
-git|https://github.com/danielmiessler/SecLists.git|/opt/wordlists
+git|https://github.com/danielmiessler/SecLists.git --depth 1|/opt/wordlists
 git|https://github.com/drwetter/testssl.sh|/opt
 script|cme.sh
 script|code.sh
