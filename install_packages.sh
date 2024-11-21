@@ -11,6 +11,10 @@ then
     while IFS= read -r line; do
         package_type=$(echo $line | cut -d '|' -f1)
         package_name=$(echo $line | cut -d '|' -f2)
+        echo "==============================="
+        echo $package_name
+        echo "==============================="
+        echo
         if [ $package_type == 'apt' ]; then
             if ! dpkg -l |grep -q -w $package_name ;
             then
