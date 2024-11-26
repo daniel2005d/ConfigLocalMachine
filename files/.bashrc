@@ -100,6 +100,7 @@ alias em='emacs -nw'
 alias dd='dd status=progress'
 alias _='sudo'
 alias _i='sudo -i'
+alias ls='ls -lh --group-directories-first --color'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -121,16 +122,34 @@ if ! shopt -oq posix; then
   fi
 fi
 
+print_git(){
+  
+  if command -v git &>/dev/null
+  then
+    if [ -d .git ]; then
+      git_branch=$(git branch --show-current)
+      echo -e "\033[0;36m[ $git_branch]\033[0;31m"
+    else
+      echo -n ""
+    fi
+  fi
+}
 
 # Store the last directory in a variable
 export LAST_DIR="$PWD"
 
 
+check_ssh(){
+	if [[ -n "$SSH_CONNECTION" ]]; then
+          echo -e "\033[38;5;214m[󰣀]\033[0;31m"
+        fi
+
+}
 
 set_ps1(){
     case "$TERM" in
     xterm*|rxvt*)
-      PS1="\[\033[0;31m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]root\[\033[01;33m\]@\[\033[01;96m\]$(get_ip)'; else echo '\[\033[0;39m\]\u\[\033[01;33m\]󱌖 \[\033[01;96m\]$(get_ip)'; fi)\[\033[0;31m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]\342\224\224\342\224\200\342\224\200\342\225\274\[\033[0m\]\[\e[01;97m\] \[\e[0m\]"
+	    PS1="\[\033[0;31m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]root\[\033[01;33m\]@\[\033[01;96m\]$(get_ip)'; else echo '\[\033[0;39m\]\u\[\033[01;33m\]󱌖 \[\033[01;96m\]$(get_ip)'; fi)\[\033[0;31m\]]\342\224\200$(check_ssh)[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]\342\224\224\342\224\200\342\224\200\342\225\274\[\033[0m\]\[\e[01;97m\] \[\e[0m\]"
         ;;
     *)
     PS1="\[\033[0;31m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]root\[\033[01;33m\]@\[\033[01;96m\]$(get_ip)'; else echo '\[\033[0;39m\]\u\[\033[01;33m\]󱌖 \[\033[01;96m\]$(get_ip)'; fi)\[\033[0;31m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]\342\224\224\342\224\200\342\224\200\342\225\274\[\033[0m\]\[\e[01;97m\] \[\e[0m\]"
