@@ -1,6 +1,5 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
+# Version 1.1
+
 
 # If not running interactively, don't do anything
 case $- in
@@ -141,24 +140,26 @@ export LAST_DIR="$PWD"
 
 check_ssh(){
 	if [[ -n "$SSH_CONNECTION" ]]; then
-          echo -e "\033[38;5;214m[󰣀]\033[0;31m"
-        fi
+              PROMPT_COMMAND='PS1_CMD1=$(ip route get 1.1.1.1 | awk -F"src " '"'"'NR == 1{ split($2, a," ");print a[1]}'"'"')'; PS1='\[\e[91;1;3m\]\u\[\e[23;38;5;226m\] \[\e[0;96m\]${PS1_CMD1}\[\e[0m\]-\[\e[97m\][\w]\n\[\e[96m\]\$\[\e[0m\] '
+	else
+	      PS1='\[\033[0;31m\]\342\224\214\342\224\200$([[ $? != 0 ]] && echo "[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200")[\[\033[0;39m\]\u\[\033[01;33m\]󱌖 \[\033[01;96m\]$(get_ip)\[\033[0;31m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]\342\224\224\342\224\200\342\224\200\342\225\274\[\033[0m\]\[\e[01;97m\] \[\e[0m\]'
+	fi
 
 }
 
 set_ps1(){
     case "$TERM" in
     xterm*|rxvt*)
-	    PS1="\[\033[0;31m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]root\[\033[01;33m\]@\[\033[01;96m\]$(get_ip)'; else echo '\[\033[0;39m\]\u\[\033[01;33m\]󱌖 \[\033[01;96m\]$(get_ip)'; fi)\[\033[0;31m\]]\342\224\200$(check_ssh)[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]\342\224\224\342\224\200\342\224\200\342\225\274\[\033[0m\]\[\e[01;97m\] \[\e[0m\]"
+	 #   PS1="\[\033[0;31m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]root\[\033[01;33m\]@\[\033[01;96m\]$(get_ip)'; else echo '\[\033[0;39m\]\u\[\033[01;33m\]󱌖 \[\033[01;96m\]$(get_ip)'; fi)\[\033[0;31m\]]\342\224\200$(check_ssh)[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]\342\224\224\342\224\200\342\224\200\342\225\274\[\033[0m\]\[\e[01;97m\] \[\e[0m\]"
         ;;
     *)
-    PS1="\[\033[0;31m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]root\[\033[01;33m\]@\[\033[01;96m\]$(get_ip)'; else echo '\[\033[0;39m\]\u\[\033[01;33m\]󱌖 \[\033[01;96m\]$(get_ip)'; fi)\[\033[0;31m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]\342\224\224\342\224\200\342\224\200\342\225\274\[\033[0m\]\[\e[01;97m\] \[\e[0m\]"
         ;;
     esac
 
 }
 
-set_ps1
+check_ssh
+#set_ps1
 
 # Function to check for directory change
 check_directory_change() {
@@ -167,10 +168,6 @@ check_directory_change() {
         LAST_DIR="$PWD"
     fi
 }
-
-# Set PROMPT_COMMAND to call the check_directory_change function
-PROMPT_COMMAND="check_directory_change"
-
 
 get_ip(){
   if command -v route &>/dev/null
