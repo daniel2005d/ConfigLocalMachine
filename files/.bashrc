@@ -1,4 +1,4 @@
-# Version 1.1
+# Version 1.2
 
 
 # If not running interactively, don't do anything
@@ -134,18 +134,77 @@ print_git(){
   fi
 }
 
+distro_icon() {
+    local distro icon
+    if [ -f /etc/os-release ]; then
+        # Leer información de /etc/os-release
+        . /etc/os-release
+        distro=$ID
+    elif [ -f /etc/lsb-release ]; then
+        . /etc/lsb-release
+        distro=$DISTRIB_ID
+    elif [ -f /etc/debian_version ]; then
+        distro="debian"
+    elif [ -f /etc/redhat-release ]; then
+        distro="redhat"
+    else
+        distro="unknown"
+    fi
+
+    # Determinar el icono según la distribución
+    case "$distro" in
+        ubuntu)
+            icon="󰕈"  # Icono para Ubuntu
+            ;;
+        debian)
+            icon=""  # Icono para Debian
+            ;;
+        arch)
+            icon="󰣇"  # Icono para Arch Linux
+            ;;
+        fedora)
+            icon=""  # Icono para Fedora
+            ;;
+        centos)
+            icon=""  # Icono para CentOS
+            ;;
+        redhat)
+            icon=""  # Icono para Red Hat
+            ;;
+        opensuse)
+            icon=""  # Icono para openSUSE
+            ;;
+        manjaro)
+            icon=""  # Icono para Manjaro
+            ;;
+        kali)
+            icon=""  # Icono para Kali Linux
+            ;;
+        unknown)
+            icon=""  # Icono para distribuciones desconocidas
+            ;;
+        *)
+            icon=""  # Icono por defecto
+            ;;
+    esac
+	echo -e "\e[93m$icon\e[0m "
+
+}
+
+
 # Store the last directory in a variable
 export LAST_DIR="$PWD"
 
 
 check_ssh(){
 	if [[ -n "$SSH_CONNECTION" ]]; then
-              PROMPT_COMMAND='PS1_CMD1=$(ip route get 1.1.1.1 | awk -F"src " '"'"'NR == 1{ split($2, a," ");print a[1]}'"'"')'; PS1='\[\e[91m\]\u\[\e[23;38;5;226m\] \[\e[0;96m\]${PS1_CMD1}\[\e[0m\]-\[\e[97m\][\w]\n\[\e[96m\]\$\[\e[0m\] '
+		PROMPT_COMMAND='PS1_CMD1=$(ip route get 1.1.1.1 | awk -F"src " '"'"'NR == 1{ split($2, a," ");print a[1]}'"'"')'; PS1='[\[\e[91;1;3m\]\u\[\e[0m\]$(distro_icon)\[\e[96m\]${PS1_CMD1}\[\e[0m\]]-\[\e[97m\][\w]\[\e[96m\]\$ \[\e[0m\]'
 	else
-	      PS1='\[\033[0;31m\]\342\224\214\342\224\200$([[ $? != 0 ]] && echo "[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200")[\[\033[0;39m\]\u\[\033[01;33m\]󱌖 \[\033[01;96m\]$(get_ip)\[\033[0;31m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]\342\224\224\342\224\200\342\224\200\342\225\274\[\033[0m\]\[\e[01;97m\] \[\e[0m\]'
+		PS1='\[\033[0;31m\]\342\224\214\342\224\200$([[ $? != 0 ]] && echo "[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200")[\[\033[0;39m\]\u\[\033[01;33m\]$(distro_icon)\[\033[01;96m\]$(get_ip)\[\033[0;31m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]\342\224\224\342\224\200\342\224\200\342\225\274\[\033[0m\]\[\e[01;97m\] \[\e[0m\]'
 	fi
 
 }
+
 
 set_ps1(){
     case "$TERM" in
