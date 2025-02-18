@@ -31,11 +31,10 @@ if  command -v lsd &> /dev/null
 else
    alias ls='ls -lh --color --group-directories-first'
  fi
-
-if command -v bat &>/dev/null
-then
-    alias cat='/usr/bin/bat --style=plain'
-fi
+if  command -v batcat &> /dev/null
+ then
+   alias cat='/usr/bin/batcat'
+ fi
 
 alias netstat='/usr/bin/grc /usr/bin/netstat'
 alias grep='/usr/bin/grc /usr/bin/grep --color'
