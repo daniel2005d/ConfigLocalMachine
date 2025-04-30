@@ -32,7 +32,6 @@ script|cme.sh
 script|code.sh
 git|https://github.com/Flangvik/SharpCollection.git|/opt
 git|https://github.com/daniel2005d/mapXplore.git|/opt
-git|https://github.com/daniel2005d/scripts.git|/opt
 script|burp.sh
 go|github.com/jpillora/chisel@latest
 apt|responder
@@ -46,3 +45,4 @@ apt|smbclient
 apt|smbmap
 script|configurations_shortcuts.sh
 script|havoc.sh
+script|pythonapp.sh
