@@ -3,7 +3,7 @@
 
 
 print_info "Installing HttpServer"
-cd /opt;git clone git@github.com:daniel2005d/HttpServer.git
+cd /opt;git clone https://github.com/daniel2005d/HttpServer.git
 cd /opt/HttpServer
 pip install -e . --break-system-packages.
 
