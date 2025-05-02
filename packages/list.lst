@@ -32,6 +32,7 @@ script|cme.sh
 script|code.sh
 git|https://github.com/Flangvik/SharpCollection.git|/opt
 git|https://github.com/daniel2005d/mapXplore.git|/opt
+git|https://github.com/samratashok/nishang.git|/opt
 script|burp.sh
 go|github.com/jpillora/chisel@latest
 apt|responder
@@ -40,6 +41,7 @@ apt|hydra
 apt|exiftool
 apt|crunch
 apt|tor
+apt|rlwrap
 apt|xxd
 apt|smbclient
 apt|smbmap
