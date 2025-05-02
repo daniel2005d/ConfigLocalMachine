@@ -1,5 +1,5 @@
 #!/bin/bash
-
+source utils.sh
 
 if ! command -v run-httpserver > /dev/null; then
     print_info "Installing HttpServer"
