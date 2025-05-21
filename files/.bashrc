@@ -139,7 +139,19 @@ distro_icon() {
     if [ -f /etc/os-release ]; then
         # Leer información de /etc/os-release
         . /etc/os-release
-        distro=$ID
+        
+        name=$NAME
+        case "$name" in
+            Parrot*)
+                distro="parrot"
+                ;;
+            *)
+                distro=$ID
+                ;;
+        esac
+
+
+        
     elif [ -f /etc/lsb-release ]; then
         . /etc/lsb-release
         distro=$DISTRIB_ID
@@ -150,7 +162,8 @@ distro_icon() {
     else
         distro="unknown"
     fi
-
+    
+    
     # Determinar el icono según la distribución
     case "$distro" in
         ubuntu)
@@ -179,6 +192,9 @@ distro_icon() {
             ;;
         kali)
             icon=""  # Icono para Kali Linux
+            ;;
+        parrot)
+            icon=""
             ;;
         unknown)
             icon=""  # Icono para distribuciones desconocidas
