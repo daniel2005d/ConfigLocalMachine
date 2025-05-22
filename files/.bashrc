@@ -1,11 +1,3 @@
-# Version 1.2
-
-
-# If not running interactively, don't do anything
-case $- in
-    *i*) ;;
-      *) return;;
-esac
 
 export PATH=~/.local/bin:/snap/bin:/usr/sandbox/:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/share/games:/usr/local/sbin:/usr/sbin:/sbin:$PATH
 
@@ -213,10 +205,12 @@ export LAST_DIR="$PWD"
 
 
 check_ssh(){
+    
+
 	if [[ -n "$SSH_CONNECTION" ]]; then
-  	       PROMPT_COMMAND='PS1_CMD2=$(ip route get 1.1.1.1 | awk -F"src " '"'"'NR == 1{ split($2, a," ");print a[1]}'"'"')'; PS1='\[\e[30;107m\][ssh]\[\e[0m\][\[\e[92m\]\u\[\e[0m\]$(distro_icon)\[\e[95m\]${PS1_CMD2}\[\    e[0m\]]-[\[\e[97m\]\w\[\e[0m\]]\$'
+  	       PS1="\[\e[97m\][$(get_ip)] \[\e[38;5;39m\]\u\[\e[38;5;81m\]@\[\e[38;5;77m\]\h \[\e[38;5;226m\]\w \[\033[0m\]$ "
 	else
-		PS1='\[\033[0;31m\]\342\224\214\342\224\200$([[ $? != 0 ]] && echo "[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200")[\[\033[0;39m\]\u\[\033[01;33m\]$(distro_icon)\[\033[01;96m\]$(get_ip)\[\033[0;31m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]\342\224\224\342\224\200\342\224\200\342\225\274\[\033[0m\]\[\e[01;97m\] \[\e[0m\]'
+           PS1='\[\e[38;5;196m\]\u\[\e[38;5;202m\]@\[\e[38;5;208m\]$(get_ip) \[\e[38;5;220m\]\w\n\342\224\224\342\224\200\342\224\200\342\225\274 \[\033[0m\]$(distro_icon) '
 	fi
 
 }
@@ -281,4 +275,4 @@ unset __conda_setup
 # <<< conda initialize <<<
 }
 
-export LS_COLORS="$LS_COLORS:ow=01;93:ln=01;95"
+export LS_COLORS="di=38;5;33:ow=01;31:st=01;31:fi=38;5;154:ln=38;5;14:ex=01;32"
