@@ -157,3 +157,4 @@ if [ "$color_prompt" = yes ]; then
 fi
 
 
+export LS_COLORS="di=38;5;33:ow=01;31:st=01;31:fi=38;5;154:ln=38;5;14:ex=01;32"
