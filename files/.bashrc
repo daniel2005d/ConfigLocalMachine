@@ -113,18 +113,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-print_git(){
-  
-  if command -v git &>/dev/null
-  then
-    if [ -d .git ]; then
-      git_branch=$(git branch --show-current)
-      echo -e "\033[0;36m[ $git_branch]\033[0;31m"
-    else
-      echo -n ""
-    fi
-  fi
-}
 
 distro_icon() {
     local distro icon
@@ -195,13 +183,26 @@ distro_icon() {
             icon=""  # Icono por defecto
             ;;
     esac
-	echo -e "\e[93m$icon\e[0m "
+
+	echo -e "\[\e[93m\]$icon\[\e[0m\] "
 
 }
 
 
 # Store the last directory in a variable
 export LAST_DIR="$PWD"
+
+get_ip(){
+  if command -v route &>/dev/null
+  then
+    iface=$(route -n  | grep -E "^0.0.0.0" | awk '{print $8}' | head -n 1)
+    ip=$(/usr/sbin/ifconfig $iface 2>/dev/null| grep "inet " -m 1| awk '{print $2}') 2>/dev/null
+    if [[ -n $ip ]]; then
+      echo -e "$ip"
+    fi
+  fi
+
+}
 
 
 check_ssh(){
@@ -210,7 +211,11 @@ check_ssh(){
 	if [[ -n "$SSH_CONNECTION" ]]; then
   	       PS1="\[\e[97m\][$(get_ip)] \[\e[38;5;39m\]\u\[\e[38;5;81m\]@\[\e[38;5;77m\]\h \[\e[38;5;226m\]\w \[\033[0m\]$ "
 	else
-           PS1='\[\e[38;5;196m\]\u\[\e[38;5;202m\]@\[\e[38;5;208m\]$(get_ip) \[\e[38;5;220m\]\w\n\342\224\224\342\224\200\342\224\200\342\225\274 \[\033[0m\]$(distro_icon) '
+            ip="$(get_ip)"
+            icon="$(distro_icon)"
+           #PS1='\[\e[38;5;196m\]\u\[\e[38;5;202m\]@\[\e[38;5;208m\]$(get_ip) \[\e[38;5;220m\]\w\n\342\224\224\342\224\200\342\224\200\342\225\274 \[\033[0m\]$(distro_icon) '
+           #PS1="\[\e[38;5;196m\]\u\[\e[38;5;202m\]@\[\e[38;5;208m\]$ip \[\e[38;5;220m\]\w\n\342\224\224\342\224\200\342\224\200\342\225\274 \[\033[0m\]$icon "
+           PS1="\[\e[38;5;196m\]\u\[\e[38;5;202m\]@$ip \[\e[38;5;220m\]\w\n\342\224\224\342\224\200\342\224\200\342\225\274 $icon"
 	fi
 
 }
@@ -230,49 +235,13 @@ set_ps1(){
 check_ssh
 #set_ps1
 
-# Function to check for directory change
-check_directory_change() {
-    if [[ "$PWD" != "$LAST_DIR" ]]; then
-        set_ps1
-        LAST_DIR="$PWD"
-    fi
-}
 
-get_ip(){
-  if command -v route &>/dev/null
-  then
-    iface=$(route -n  | grep -E "^0.0.0.0" | awk '{print $8}' | head -n 1)
-    ip=$(/usr/sbin/ifconfig $iface 2>/dev/null| grep "inet " -m 1| awk '{print $2}') 2>/dev/null
-    if [[ -n $ip ]]; then
-      echo -e "$ip"
-    fi
-  fi
 
-}
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 if command -v pyenv 1>/dev/null 2>&1; then
  eval "$(pyenv init --path)"
 fi
 
-
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-function startconda(){
-
-__conda_setup="$('/opt/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/opt/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/opt/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/opt/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-}
 
 export LS_COLORS="di=38;5;33:ow=01;31:st=01;31:fi=38;5;154:ln=38;5;14:ex=01;32"
