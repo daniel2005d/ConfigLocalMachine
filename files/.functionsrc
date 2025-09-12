@@ -7533,7 +7533,7 @@ env(){
     if [ -f "$venv_path/bin/activate" ]; then
             # '.' es equivalente a 'source' y más portable en sh
             . "$venv_path/bin/activate"
-            echo "Activado: $VENV_ACTIVE_NAME ($VENV_ACTIVE_PATH)"
+            echo "Activado: ($key)"
             return 0
     else
         return 1
