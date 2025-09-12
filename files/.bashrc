@@ -102,6 +102,10 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
+if [ -f ~/.functionsrc ]; then
+    . ~/.functionsrc
+fi
+
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -252,124 +256,4 @@ fi
 
 
 export LS_COLORS="di=38;5;33:ow=01;31:st=01;31:fi=38;5;154:ln=38;5;14:ex=01;32"
-
-
-# Función para crear o retomar un "workspace"
-addworkspace() {
-    local wsname="$1"
-
-    if [[ -z "$wsname" ]]; then
-        echo "❌ Debes indicar un nombre de workspace"
-        echo "Uso: addworkspace NOMBRE"
-        return 1
-    fi
-
-    # Carpeta donde se guardarán los workspaces
-    local wsdir="$PWD/.workspaces"
-    mkdir -p "$wsdir"
-
-    local logfile="$wsdir/${wsname}.log"
-    local metafile="$wsdir/${wsname}.meta"
-
-    if [[ -f "$logfile" ]]; then
-        # Ya existe, recuperar metadata
-        if [[ -f "$metafile" ]]; then
-            local created_at
-            created_at=$(cat "$metafile")
-            echo "ℹ️ Workspace '$wsname' ya existe (creado el $created_at)."
-        else
-            echo "ℹ️ Workspace '$wsname' ya existe."
-        fi
-        echo "🔄 Continuando sesión, almacenando en: $logfile"
-    else
-        # Crear nuevo workspace
-        date "+%Y-%m-%d %H:%M:%S" > "$metafile"
-        echo "🆕 Workspace '$wsname' creado el $(cat "$metafile")"
-        echo "📂 Guardando en: $logfile"
-    fi
-
-    # Ejecutar una subshell con registro
-    script -a -f -q "$logfile"
-}
-
-
-# Función para listar los workspaces disponibles
-listworkspaces() {
-    local wsdir="$PWD/.workspaces"
-
-    if [[ ! -d "$wsdir" ]]; then
-        echo "❌ No hay ningún workspace creado todavía."
-        return 1
-    fi
-
-    echo "📋 Lista de workspaces:"
-    echo "--------------------------------------------"
-    for metafile in "$wsdir"/*.meta; do
-        # Si no hay ninguno, salir
-        [[ -e "$metafile" ]] || { echo "⚠️ No se encontraron workspaces."; return 0; }
-
-        local wsname
-        wsname=$(basename "$metafile" .meta)
-        local created_at
-        created_at=$(cat "$metafile")
-        local logfile="$wsdir/${wsname}.log"
-
-        printf "📂 %-20s | Creado: %-20s | Log: %s\n" "$wsname" "$created_at" "$logfile"
-    done
-    echo "--------------------------------------------"
-}
-
-
-addworkspace_tmux() {
-    local wsname="$1"
-
-    if [[ -z "$wsname" ]]; then
-        echo "❌ Debes indicar un nombre de workspace"
-        echo "Uso: addworkspace_tmux NOMBRE"
-        return 1
-    fi
-
-    # Carpeta donde se guardarán los workspaces
-    local wsdir="$PWD/.workspaces"
-    mkdir -p "$wsdir"
-
-    local metafile="$wsdir/${wsname}.meta"
-
-    if [[ -d "$wsdir/$wsname" ]]; then
-        if [[ -f "$metafile" ]]; then
-            local created_at
-            created_at=$(cat "$metafile")
-            echo "ℹ️ Workspace '$wsname' ya existe (creado el $created_at)."
-        else
-            echo "ℹ️ Workspace '$wsname' ya existe."
-        fi
-    else
-        mkdir -p "$wsdir/$wsname"
-        date "+%Y-%m-%d %H:%M:%S" > "$metafile"
-        echo "🆕 Workspace '$wsname' creado el $(cat "$metafile")"
-    fi
-
-    echo "📂 Logs en: $wsdir/$wsname/"
-
-    # Crear nueva sesión tmux si no existe
-    if ! tmux has-session -t "$wsname" 2>/dev/null; then
-        tmux new-session -d -s "$wsname"
-    fi
-
-    # Configurar logging de cada pane con timestamp
-    for p in $(tmux list-panes -a -t "$wsname" -F "#{session_name}:#{window_index}.#{pane_index}"); do
-        logfile="$wsdir/$wsname/${p}.out.log"
-        tmux pipe-pane -o -t "$p" "ts '[%Y-%m-%d %H:%M:%S] ' >> $logfile"
-        echo "   - Pane $p loggeado en $logfile"
-    done
-
-    # Configurar que cada bash dentro de tmux guarde comandos con timestamp
-    # Esto se inyecta como variable de entorno al crear nuevos panes/ventanas
-    tmux set-environment -t "$wsname" HISTFILE "$wsdir/$wsname/${wsname}.cmd.log"
-    tmux set-environment -t "$wsname" HISTTIMEFORMAT "%F %T "
-    tmux set-environment -t "$wsname" PROMPT_COMMAND "history -a; history -c; history -r; \$PROMPT_COMMAND"
-
-    # Adjuntarse a la sesión
-    tmux attach -t "$wsname"
-}
 
