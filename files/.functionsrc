@@ -7522,7 +7522,7 @@ env(){
         venv_path="/opt/scripts/.venv/"
         ;;
     impacket)
-        venv_path="/opt/impacket"
+        venv_path="/opt/impacket/.venv/"
         ;;
     *)
         echo "You need select a valid option"
