@@ -35,7 +35,7 @@ unlock_sudo(){
 add_scripts(){
     if [ ! -d /usr/share/bin ];
     then
-        /usr/bin/mkdir $HOME/bin
+        /usr/bin/mkdir /usr/share/bin
     fi
 
     if [ -d /usr/share/bin ];
