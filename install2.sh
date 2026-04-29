@@ -7,7 +7,6 @@ echo -e "Run with sudo -E"
 echo -e "***************"
 
 
-
 # Install Packages
 sudo apt install -y \
 python3-venv \
@@ -146,3 +145,5 @@ xfconf-query -c xsettings -p /Net/ThemeName -s "Kali-Green-Dark"
 ## Terminal
 
 cp files/config/qterminal.ini ~/.config/qterminal.org/qterminal.ini
+
+./git.sh
