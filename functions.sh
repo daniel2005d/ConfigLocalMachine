@@ -33,15 +33,15 @@ unlock_sudo(){
 }
 
 add_scripts(){
-    if [ ! -d $HOME/bin ];
+    if [ ! -d /usr/share/bin ];
     then
         /usr/bin/mkdir $HOME/bin
     fi
 
-    if [ -d $HOME/bin ];
+    if [ -d /usr/share/bin ];
     then
         print_info "[+] Creating Scripts files"
-        /usr/bin/cp $SCRIPTS_DIRECTORY/* $HOME/bin/
+        /usr/bin/cp $SCRIPTS_DIRECTORY/* /usr/share/bin/
     fi
 }
 
