@@ -75,7 +75,7 @@
       </property>
     </property>
     <property name="plugin-2" type="string" value="genmon">
-      <property name="command" type="string" value="/usr/share/bin/getip.sh"/>
+      <property name="command" type="string" value="~/bin/getip.sh"/>
       <property name="use-label" type="bool" value="false"/>
       <property name="text" type="string" value="(genmon)"/>
       <property name="update-period" type="int" value="15000"/>

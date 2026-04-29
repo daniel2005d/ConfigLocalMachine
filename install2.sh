@@ -1,9 +1,17 @@
 #!/bin/bash
 
 source functions.sh
+
+
+echo -e "Run with sudo -E"
+echo -e "***************"
+
+if [ "$EUID" -ne 0 ]; then 
+  echo "Please run with sudo"
+  exit 1
+fi
+
 # Install Packages
-
-
 sudo apt install -y \
 python3-venv \
 sqlmap \
@@ -73,28 +81,44 @@ xfconf-query -c xfce4-keyboard-shortcuts \
     -n -t string -s "show_desktop_key"
 
 ## Custom Settings
-cp -r -v files/*.xml ${HOME}/.config/xfce4/xfconf/xfce-perchannel-xml/
+cp -r -v files/config/*.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/
 
 
 cp files/.bashrc ${HOME}/
 cp files/.bash_aliases ${HOME}/
 cp files/.vimrc ${HOME}/
-cp files/.tmux ${HOME}/
+cp files/.tmux.conf ${HOME}/
 
 
 ## Wallpaper
+if [ ! -f "usr/share/backgrounds/wp8828961-offensive-security-wallpapers.png" ]; then
+    cp -v files/wallpaper/*.png /usr/share/backgrounds/
+fi
 
-mkdir /usr/share/backgrounds/${USER}
-cp -v files/wallpaper/*.png /usr/share/backgrounds/${USER}
+
+
 
 ## Icons
 
-cp -r -v files/icons/hackthebox /usr/share/icons/
+if [ ! -d "/usr/share/icons/hackthebox" ]; then
+    cp -r -v icons/hackthebox /usr/share/icons/
+fi
+
+if [ ! -d "/usr/share/icons/custom-kali" ]; then
+    cp -r -v icons/custom-kali /usr/share/icons/
+fi
+
+
 
 ## Allow images to icons
+if ! grep -qF "QT_QPA_PLATFORMTHEME=gtk3 qterminal" "/etc/environment"; then
+    echo "QT_QPA_PLATFORMTHEME=gtk3 qterminal" | tee -a "/etc/environment"
+else
+    print_info "La configuración ya existe, saltando..." $redColour
+fi
 
-echo "QT_QPA_PLATFORMTHEME=gtk3 qterminal" >> /etc/environment
 
 
 unlock_opt
 unlock_sudo
+add_scripts

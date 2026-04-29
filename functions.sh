@@ -1,3 +1,5 @@
+source utils.sh
+
 FONTS_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/Hack.zip"
 LOCAL_FOLDER=$HOME/.local/share
 
@@ -29,3 +31,17 @@ unlock_sudo(){
     fi
     
 }
+
+add_scripts(){
+    if [ ! -d $HOME/bin ];
+    then
+        /usr/bin/mkdir $HOME/bin
+    fi
+
+    if [ -d $HOME/bin ];
+    then
+        print_info "[+] Creating Scripts files"
+        /usr/bin/cp $SCRIPTS_DIRECTORY/* $HOME/bin/
+    fi
+}
+
