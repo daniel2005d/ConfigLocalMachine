@@ -13,3 +13,8 @@ fi
 if [[ ! -d "/opt/wordlists/SecLists" ]];then
     git clone --depth 1 https://github.com/danielmiessler/SecLists.git /opt/wordlists/SecLists
 fi
+
+if [[ ! -d "/opt/scripts" ]];then
+    git clone https://github.com/daniel2005d/scripts.git /opt/scripts
+fi
+
