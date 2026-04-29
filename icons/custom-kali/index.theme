@@ -1,0 +1,9 @@
+[Icon Theme]
+Name=Kali Custom
+Comment=Mi set de iconos personalizado
+Directories=scalable/apps
+
+[scalable/apps]
+Size=48
+Context=Applications
+Type=Scalable
