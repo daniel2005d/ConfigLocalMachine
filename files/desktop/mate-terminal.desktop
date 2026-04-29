@@ -1,10 +1,11 @@
 #!/usr/bin/env xdg-open
+
 [Desktop Entry]
 Version=1.0
 Type=Application
 Terminal=false
-Icon=custom_HOME/.local/share/icons/hackthebox/icons/utilities-terminal.svg
-Icon[en_US]=custom_HOME/.local/share/icons/hackthebox/icons/utilities-terminal.svg
+Icon=~/.local/share/icons/hackthebox/icons/utilities-terminal.svg
+Icon[en_US]=~/.local/share/icons/hackthebox/icons/utilities-terminal.svg
 Name[en_US]=qterminal
 Exec=/usr/bin/qterminal
 Name=qterminal

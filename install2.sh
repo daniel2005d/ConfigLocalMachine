@@ -6,10 +6,7 @@ source functions.sh
 echo -e "Run with sudo -E"
 echo -e "***************"
 
-if [ "$EUID" -ne 0 ]; then 
-  echo "Please run with sudo"
-  exit 1
-fi
+
 
 # Install Packages
 sudo apt install -y \
@@ -84,8 +81,11 @@ xfconf-query -c xfce4-keyboard-shortcuts \
 cp -r -v files/config/*.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/
 
 # Cambiar el wallpaper para el monitor actual (ajusta el nombre si es necesario)
-xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitorVirtual1/workspace0/last-image -s "/usr/share/backgrounds/default.png"
-xfconf-query -c xsettings -p /Net/IconThemeName -s "custom-kali"
+#sudo -u "$REAL_USER" DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$USER_ID/bus \
+#xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitorVirtual1/workspace0/last-image -s "/usr/share/backgrounds/default.png"
+
+#sudo -u "$REAL_USER" DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$USER_ID/bus \
+#xfconf-query -c xsettings -p /Net/IconThemeName -s "custom-kali"
 
 
 cp files/.bashrc ${HOME}/
@@ -96,43 +96,43 @@ cp files/.tmux.conf ${HOME}/
 
 ## Wallpaper
 if [ ! -f "usr/share/backgrounds/wp8828961-offensive-security-wallpapers.png" ]; then
-    cp -v files/wallpaper/*.png /usr/share/backgrounds/
+    sudo cp -v files/wallpaper/*.png /usr/share/backgrounds/
 fi
 
 
 ## Themes
 
 if [ ! -d "/usr/share/themes/mkos-BigSur-Dark-gtk" ]; then
-    cp -r -v files/themes/mkos-BigSur-Dark-gtk /usr/share/themes/
+    sudo cp -r -v files/themes/mkos-BigSur-Dark-gtk /usr/share/themes/
 fi
 
 if [ ! -d "/usr/share/themes/Mkosbigsur-gtk" ]; then
-    cp -r -v files/themes/Mkosbigsur-gtk /usr/share/themes/
+    sudo cp -r -v files/themes/Mkosbigsur-gtk /usr/share/themes/
 fi
 
 ## Icons
 
 if [ ! -d "/usr/share/icons/hackthebox" ]; then
-    cp -r -v icons/hackthebox /usr/share/icons/
+    sudo cp -r -v icons/hackthebox /usr/share/icons/
 fi
 
 if [ ! -d "/usr/share/icons/custom-kali" ]; then
-    cp -r -v icons/custom-kali /usr/share/icons/
+    sudo cp -r -v icons/custom-kali /usr/share/icons/
 fi
 
 ## Allow images to icons
 if ! grep -qF "QT_QPA_PLATFORMTHEME=gtk3 qterminal" "/etc/environment"; then
-    echo "QT_QPA_PLATFORMTHEME=gtk3 qterminal" | tee -a "/etc/environment"
+    echo "QT_QPA_PLATFORMTHEME=gtk3 qterminal" | sudo  tee -a "/etc/environment"
 else
     print_info "La configuración ya existe, saltando..." $redColour
 fi
 
 ## Panel Icons
-cp -v files/icons/*.* /usr/share/applications/
-
+sudo cp -v files/desktop/*.* /usr/share/applications/
+sudo cp -v -r icons/*.svg ~/.local/share/icons/hackthebox/icons/
 unlock_opt
 unlock_sudo
 add_scripts
 
 
-gtk-update-icon-cache -f -t /usr/share/icons/custom-kali/
+sudo gtk-update-icon-cache -f -t /usr/share/icons/custom-kali/
