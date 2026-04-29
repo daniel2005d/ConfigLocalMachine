@@ -129,10 +129,20 @@ fi
 
 ## Panel Icons
 sudo cp -v files/desktop/*.* /usr/share/applications/
+cp -v files/desktop/*.* ~/.local/share/applications
+
 sudo cp -v -r icons/*.svg ~/.local/share/icons/hackthebox/icons/
+
 unlock_opt
 unlock_sudo
 add_scripts
 
-
 sudo gtk-update-icon-cache -f -t /usr/share/icons/custom-kali/
+xfce4-panel-profiles load files/config/custompanel.tar.bz2
+xfconf-query -c xsettings -p /Net/IconThemeName -s "custom-kali"
+xfconf-query -c xfce4-desktop -p /backdrop -l | grep "last-image" | xargs -I {} xfconf-query -c xfce4-desktop -p {} -s "/usr/share/backgrounds/default.png"
+xfconf-query -c xsettings -p /Net/ThemeName -s "Kali-Green-Dark"
+
+## Terminal
+
+cp files/config/qterminal.ini ~/.config/qterminal.org/qterminal.ini
