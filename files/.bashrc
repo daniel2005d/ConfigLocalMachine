@@ -242,6 +242,17 @@ resetbash(){
   check_ssh
 }
 
+# Se sobreescribe la función de tmux, para obligar a especificar el nombre
+tmux(){
+
+    if [[ -z "$1" ]];then
+        echo -e "\nAsigna el nombre del panel\n"
+        return
+    fi
+
+    /usr/bin/tmux new -s $1
+}
+
 
 check_ssh
 #set_ps1

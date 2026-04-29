@@ -147,3 +147,4 @@ xfconf-query -c xsettings -p /Net/ThemeName -s "Kali-Green-Dark"
 cp files/config/qterminal.ini ~/.config/qterminal.org/qterminal.ini
 
 ./git.sh
+./software.sh
