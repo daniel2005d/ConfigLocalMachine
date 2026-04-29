@@ -83,6 +83,10 @@ xfconf-query -c xfce4-keyboard-shortcuts \
 ## Custom Settings
 cp -r -v files/config/*.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/
 
+# Cambiar el wallpaper para el monitor actual (ajusta el nombre si es necesario)
+xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitorVirtual1/workspace0/last-image -s "/usr/share/backgrounds/default.png"
+xfconf-query -c xsettings -p /Net/IconThemeName -s "custom-kali"
+
 
 cp files/.bashrc ${HOME}/
 cp files/.bash_aliases ${HOME}/
@@ -96,7 +100,15 @@ if [ ! -f "usr/share/backgrounds/wp8828961-offensive-security-wallpapers.png" ];
 fi
 
 
+## Themes
 
+if [ ! -d "/usr/share/themes/mkos-BigSur-Dark-gtk" ]; then
+    cp -r -v files/themes/mkos-BigSur-Dark-gtk /usr/share/themes/
+fi
+
+if [ ! -d "/usr/share/themes/Mkosbigsur-gtk" ]; then
+    cp -r -v files/themes/Mkosbigsur-gtk /usr/share/themes/
+fi
 
 ## Icons
 
@@ -115,7 +127,12 @@ else
     print_info "La configuración ya existe, saltando..." $redColour
 fi
 
+## Panel Icons
+cp -v files/icons/*.* /usr/share/applications/
 
 unlock_opt
 unlock_sudo
 add_scripts
+
+
+gtk-update-icon-cache -f -t /usr/share/icons/custom-kali/

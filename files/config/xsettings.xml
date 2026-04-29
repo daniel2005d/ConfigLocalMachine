@@ -2,7 +2,7 @@
 
 <channel name="xsettings" version="1.0">
   <property name="Net" type="empty">
-    <property name="ThemeName" type="mkos-BigSur-Dark-gtk"/>
+    <property name="ThemeName" type="string" value="Kali-Orange-Dark"/>
     <property name="IconThemeName" type="string" value="custom-kali"/>
   </property>
   <property name="Xft" type="empty">
