@@ -108,15 +108,12 @@ if [ ! -d "/usr/share/icons/custom-kali" ]; then
     cp -r -v icons/custom-kali /usr/share/icons/
 fi
 
-
-
 ## Allow images to icons
 if ! grep -qF "QT_QPA_PLATFORMTHEME=gtk3 qterminal" "/etc/environment"; then
     echo "QT_QPA_PLATFORMTHEME=gtk3 qterminal" | tee -a "/etc/environment"
 else
     print_info "La configuración ya existe, saltando..." $redColour
 fi
-
 
 
 unlock_opt
