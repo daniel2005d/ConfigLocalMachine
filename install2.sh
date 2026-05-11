@@ -15,7 +15,7 @@ macchanger \
 vim \
 lsd \
 pipx \
-testssl \
+testssl.sh \
 git \
 tmux \
 curl \
