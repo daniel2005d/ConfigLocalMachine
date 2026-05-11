@@ -78,7 +78,7 @@ xfconf-query -c xfce4-keyboard-shortcuts \
     -n -t string -s "show_desktop_key"
 
 ## Custom Settings
-cp -r -v files/config/*.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/
+#cp -r -v files/config/*.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/
 
 # Cambiar el wallpaper para el monitor actual (ajusta el nombre si es necesario)
 #sudo -u "$REAL_USER" DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$USER_ID/bus \
