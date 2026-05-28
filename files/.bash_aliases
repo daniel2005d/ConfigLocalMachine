@@ -137,6 +137,7 @@ function getPorts(){
 }
 
 function setjdk11(){
+  # Install sudo apt install openjdk-11-jdk
   export PATH="/usr/lib/jvm/java-11-openjdk-amd64/bin:$PATH"
   java --version
 }
