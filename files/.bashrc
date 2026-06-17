@@ -199,8 +199,16 @@ export LAST_DIR="$PWD"
 get_ip(){
   if command -v route &>/dev/null
   then
-    iface=$(route -n  | grep -E "^0.0.0.0" | awk '{print $8}' | head -n 1)
-    ip=$(/usr/sbin/ifconfig $iface 2>/dev/null| grep "inet " -m 1| awk '{print $2}') 2>/dev/null
+    tun0=$(ifconfig | grep tun0 -A 1 | grep inet | awk '{print $2}')
+    if [[ -n $tun0 ]];then
+        ip="${tun0}(󰩠)"
+    else
+        iface=$(route -n  | grep -E "^0.0.0.0" | awk '{print $8}' | head -n 1)
+        network=$(/usr/sbin/ifconfig $iface 2>/dev/null| grep "inet " -m 1| awk '{print $2}') 2>/dev/null
+        ip="${network}(󰒄)"
+    fi
+
+    
     if [[ -n $ip ]]; then
       echo -e "$ip"
     fi
@@ -268,3 +276,4 @@ fi
 
 export LS_COLORS="di=38;5;33:ow=01;31:st=01;31:fi=38;5;154:ln=38;5;14:ex=01;32"
 
+. "$HOME/.cargo/env"
