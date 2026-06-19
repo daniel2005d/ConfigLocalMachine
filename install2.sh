@@ -15,6 +15,7 @@ macchanger \
 vim \
 lsd \
 pipx \
+golang \
 code-oss \
 testssl.sh \
 git \
