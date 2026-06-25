@@ -36,6 +36,7 @@ if  command -v batcat &> /dev/null
    alias cat='/usr/bin/batcat'
  fi
 
+
 alias netstat='/usr/bin/grc /usr/bin/netstat'
 alias grep='/usr/bin/grc /usr/bin/grep --color'
 alias xcopy='xclip -sel clip'
@@ -137,9 +138,50 @@ function getPorts(){
 }
 
 function setjdk11(){
-  # Install sudo apt install openjdk-11-jdk
   export PATH="/usr/lib/jvm/java-11-openjdk-amd64/bin:$PATH"
   java --version
+}
+
+function activateenv(){
+  source .venv/bin/activate
+}
+
+function nxc() {
+
+   local tiene_log=false
+    local saltar_validacion=false
+    local args_limpios=()
+
+    # 1. Primera pasada: Detectar si viene --nolog y limpiar los argumentos
+    for arg in "$@"; do
+        if [ "$arg" = "--nolog" ]; then
+            saltar_validacion=true
+        else
+            # Guardamos todos los argumentos que NO sean --nolog
+            args_limpios+=("$arg")
+        fi
+    done
+
+    # 2. Si NO se pasó --nolog, hacemos la validación habitual
+    if [ "$saltar_validacion" = false ]; then
+        for arg in "${args_limpios[@]}"; do
+            if [ "$arg" = "--log" ] || [ "$arg" = "--help" ] || [ "$arg" = "-L" ]; then
+                tiene_log=true
+                break
+            fi
+        done
+
+        # Si no se encontró ningún parámetro válido de log/help, bloqueamos
+        if [ "$tiene_log" = false ]; then
+            echo -e "\e[31m[-] Error: Es obligatorio incluir el parámetro --log <archivo> para guardar la auditoría.\e[0m"
+            echo -e "Uso correcto: nxc smb 10.10.10.100 \e[32m--log mi_log.txt\e[0m [otras_opciones]"
+            echo -e "O puedes saltar esta regla usando: nxc smb 10.10.10.100 \e[33m--nolog\e[0m"
+            return 1
+        fi
+    fi
+
+    # 3. Ejecutamos pasándole únicamente los argumentos limpios
+    command nxc "${args_limpios[@]}"
 }
 
 # Set 'man' colors
@@ -156,6 +198,8 @@ if [ "$color_prompt" = yes ]; then
         man "$@"
         }
 fi
+
+
 
 
 export LS_COLORS="di=38;5;33:ow=01;31:st=01;31:fi=38;5;154:ln=38;5;14:ex=01;32"
